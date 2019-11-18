@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">WGApp</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="app_name">WG-App</string>
+    <string name="title_budget">Budget</string>
+    <string name="title_stocks">Stocks</string>
+    <string name="title_resources">Ressourcen</string>
+    <string name="title_settings">Settings</string>
 </resources>

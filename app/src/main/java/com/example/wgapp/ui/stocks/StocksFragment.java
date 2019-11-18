@@ -1,4 +1,4 @@
-package com.example.wgapp.ui.notifications;
+package com.example.wgapp.ui.stocks;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.wgapp.R;
 
-public class NotificationsFragment extends Fragment {
+public class StocksFragment extends Fragment {
 
-    private NotificationsViewModel notificationsViewModel;
+    private StocksViewModel stocksViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        notificationsViewModel =
-                ViewModelProviders.of(this).get(NotificationsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_notifications, container, false);
-        final TextView textView = root.findViewById(R.id.text_notifications);
-        notificationsViewModel.getText().observe(this, new Observer<String>() {
+        stocksViewModel =
+                ViewModelProviders.of(this).get(StocksViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_budget, container, false);
+        final TextView textView = root.findViewById(R.id.text_stocks);
+        stocksViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
