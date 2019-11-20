@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +16,8 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.wgapp.R;
 
+import java.util.List;
+
 public class SettingsFragment extends Fragment {
 
     private SettingsViewModel settingsViewModel;
@@ -23,13 +27,19 @@ public class SettingsFragment extends Fragment {
         settingsViewModel =
                 ViewModelProviders.of(this).get(SettingsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_budget, container, false);
-        final TextView textView = root.findViewById(R.id.text_settings);
-        settingsViewModel.getText().observe(this, new Observer<String>() {
+
+        final ListView settingsListView = root.findViewById(R.id.settings_list_view);
+        settingsViewModel.getSettingsList().observe(this, new Observer<List<String>>() {
             @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
+            public void onChanged(List<String> settingsList) {
+                // update UI
+                android.widget.ListAdapter adapter = new ArrayAdapter<String>( getActivity(),
+                        android.R.layout.simple_list_item_1, android.R.id.text1, settingsList);
+                // Assign adapter to ListView
+                settingsListView.setAdapter(adapter);
             }
         });
+
         return root;
     }
 }

@@ -1,8 +1,8 @@
 package com.example.wgapp;
 
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 
+import com.example.wgapp.ui.signIn.FirebaseUIActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,9 +33,6 @@ import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.auth.UserInfo;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
 
 
 public class MainActivity extends AppCompatActivity {

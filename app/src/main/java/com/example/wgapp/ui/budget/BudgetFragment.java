@@ -29,10 +29,7 @@ public class BudgetFragment extends Fragment {
                 ViewModelProviders.of(this).get(BudgetViewModel.class);
         View root = inflater.inflate(R.layout.fragment_budget, container, false);
 
-        final TextView textView = root.findViewById(R.id.text_budget);
         final ListView budgetListView = root.findViewById(R.id.budget_list_view);
-
-
         budgetViewModel.getBudgetList().observe(this, new Observer<List<String>>() {
             @Override
             public void onChanged(List<String> budgetList) {
@@ -41,14 +38,6 @@ public class BudgetFragment extends Fragment {
                         android.R.layout.simple_list_item_1, android.R.id.text1, budgetList);
                 // Assign adapter to ListView
                 budgetListView.setAdapter(adapter);
-            }
-        });
-
-
-        budgetViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
             }
         });
 

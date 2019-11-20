@@ -17,10 +17,6 @@ import androidx.lifecycle.ViewModel;
 
 public class BudgetViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
-    public LiveData<String> getText() {
-        return mText;
-    }
 
 
     private MutableLiveData<List<String>> budgetList;
@@ -57,8 +53,6 @@ public class BudgetViewModel extends ViewModel {
 
 
     public BudgetViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is Budget fragment hard code");
     }
 
 
