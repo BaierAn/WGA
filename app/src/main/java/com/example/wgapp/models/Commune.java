@@ -6,8 +6,15 @@ import java.util.List;
 public class Commune {
 
     private List<Roommate> roommates = new ArrayList<Roommate>();
-    private List<Resource> resources = new ArrayList<Resource>();
+    private List<CoEvent> coEvents = new ArrayList<CoEvent>();
 
+    public List<Roommate> getRoommates() {
+        return roommates;
+    }
+
+    public List<CoEvent> getCoEvents() {
+        return coEvents;
+    }
 
     public  Commune(){
 
