@@ -22,42 +22,13 @@
             android:contentDescription="@string/desc_firebase_lockup"
             android:src="@drawable/ic_home_black_24dp" />
 
-        <TextView
-            android:id="@+id/titleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/title_bottom_margin"
-            android:text="@string/firebaseui_title_text"
-            android:theme="@style/ThemeOverlay.MyTitleText" />
-
-        <TextView
-            android:id="@+id/status"
-            style="@style/ThemeOverlay.MyTextDetail"
-            android:text="@string/signed_out" />
-
-        <TextView
-            android:id="@+id/detail"
-            style="@style/ThemeOverlay.MyTextDetail"
-            tools:text="Firebase User ID: 123456789abc" />
-
-    </LinearLayout>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/grey_300"
-        android:gravity="center_vertical">
-
         <Button
             android:id="@+id/signInButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/sign_in"
+            android:text="@string/create_com"
             android:theme="@style/ThemeOverlay.MyDarkButton"
-            android:onClick="createSignInIntent"
             android:visibility="visible" />
 
         <Button
@@ -65,10 +36,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/sign_out"
-            android:theme="@style/ThemeOverlay.MyDarkButton"
-            android:visibility="gone" />
+            android:text="@string/join_com"
+            android:theme="@style/ThemeOverlay.MyDarkButton" />
 
-    </RelativeLayout>
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/ThemeOverlay.MyTextDetail"
+        android:text="@string/already_joined" />
 
 </LinearLayout>

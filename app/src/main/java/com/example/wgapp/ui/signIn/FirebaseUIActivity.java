@@ -2,6 +2,8 @@ package com.example.wgapp.ui.signIn;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -35,7 +37,7 @@ public class FirebaseUIActivity extends AppCompatActivity {
         setContentView(R.layout.activity_firebase_ui);
     }
 
-    public void createSignInIntent() {
+    public void createSignInIntent(View v) {
         // [START auth_fui_create_intent]
         // Choose authentication providers
         List<AuthUI.IdpConfig> providers = Arrays.asList(
@@ -50,6 +52,8 @@ public class FirebaseUIActivity extends AppCompatActivity {
                 RC_SIGN_IN);
         // [END auth_fui_create_intent]
     }
+
+
 
     // [START auth_fui_result]
     @Override

@@ -58,12 +58,18 @@ public class MainActivity extends AppCompatActivity {
         if (user != null) {
             setContentView(R.layout.activity_main);
         } else {
-            Intent intent = new Intent(this, FirebaseUIActivity.class);
-            startActivity(intent);
+            final AppCompatActivity self = this;
+           new Thread(
+                   new Runnable() {
+                       @Override
+                       public void run() {
+                           Intent intent = new Intent(self, FirebaseUIActivity.class);
+                           startActivity(intent);
+                       }
+                   }
+           ).start();
         }
         // [END check_current_user]
-
-
 
     }
 

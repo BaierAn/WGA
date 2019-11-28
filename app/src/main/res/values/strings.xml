@@ -8,6 +8,28 @@
     <string name="signed_out">signed out</string>
     <string name="sign_out">sign out</string>
 
+    <string name="create_com">Create Wg</string>
+    <string name="join_com">Join Wg</string>
+    <string name="join">Join</string>
+
+    <string name="join_com_banner">Open Shared Link via App, or Paste it in the Textbox</string>
+    <string name="wg_link">WG Link</string>
+    <string name="already_joined">Already Joined</string>
+
+
+    <string name="accept">Accept</string>
+    <string name="decline">Decline</string>
+
+    <string name="create_share">Create and Share</string>
+
+    <string name="logout">Logout</string>
+    <string name="event_log">Event Log</string>
+    <string name="share_invit_link">Share Invitation Link</string>
+    <string name="retrieve_user_data">Retrieve Userdata</string>
+    <string name="delete_user_data">Delete Userdata</string>
+
+
+
     <string name="desc_firebase_lockup">desc_firebase_lockup out</string>
     <string name="firebaseui_title_text">desc_firebase_lockup out</string>
 
