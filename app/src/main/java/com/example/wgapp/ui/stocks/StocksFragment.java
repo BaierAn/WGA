@@ -1,5 +1,6 @@
 package com.example.wgapp.ui.stocks;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,8 @@ import com.example.wgapp.R;
 
 import java.util.List;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 public class StocksFragment extends Fragment {
 
     private StocksViewModel stocksViewModel;
@@ -27,6 +30,10 @@ public class StocksFragment extends Fragment {
         stocksViewModel =
                 ViewModelProviders.of(this).get(StocksViewModel.class);
         View root = inflater.inflate(R.layout.fragment_budget, container, false);
+
+        //createStocksButton
+
+
 
         final ListView stocksListView = root.findViewById(R.id.stocks_list_view);
         stocksViewModel.getStocksList().observe(this, new Observer<List<String>>() {
@@ -40,6 +47,12 @@ public class StocksFragment extends Fragment {
             }
         });
 
+
+
         return root;
     }
+
+
+
+
 }

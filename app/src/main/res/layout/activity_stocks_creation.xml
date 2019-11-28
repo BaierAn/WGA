@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/StockCreationLastInputButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="getLastInput"
+        android:text="Todo lastINput" />
+
+    <TextView
+        android:id="@+id/StockCreationTextName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="todo Name" />
+
+
+    <EditText
+        android:id="@+id/StockCreationInputName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name" />
+
+
+
+    <Spinner
+        android:id="@+id/StockCreationDropdownType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/StockCreationTotalCostText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="todo Totalcost" />
+
+    <EditText
+        android:id="@+id/StockCreationTotalCostInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberSigned" />
+
+    <TextView
+        android:id="@+id/StockCreationTotalAmountText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="todo total amount" />
+
+    <EditText
+        android:id="@+id/StockCreationTotalAmountInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberSigned" />
+
+    <Button
+        android:id="@+id/StockCreationBarcodeButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="scanBarcode"
+        android:text="todo barcode" />
+
+    <Button
+        android:id="@+id/StockCreationCreate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="createStock"
+        android:text="todo Create" />
+
+
+
+</LinearLayout>

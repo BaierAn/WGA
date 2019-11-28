@@ -2,7 +2,9 @@ package com.example.wgapp;
 
 import android.os.Bundle;
 
+import com.example.wgapp.models.Commune;
 import com.example.wgapp.ui.signIn.FirebaseUIActivity;
+import com.example.wgapp.ui.stocks.StockCreationActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,9 +39,15 @@ import android.content.Intent;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    private Commune commune;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        initTestData();
 
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -73,7 +81,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void initTestData(){
 
+    }
+
+    public void createNewStock(){
+        Intent intent = new Intent(this , StockCreationActivity.class);
+        startActivity(intent);
+    }
 
 
     public void linkAndMerge(AuthCredential credential) {

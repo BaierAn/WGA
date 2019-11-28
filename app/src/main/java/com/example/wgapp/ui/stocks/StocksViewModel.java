@@ -1,17 +1,32 @@
 package com.example.wgapp.ui.stocks;
 
+import android.content.Intent;
 import android.os.Handler;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+
+import com.example.wgapp.models.CoEvent;
+import com.example.wgapp.models.CoEventTypes;
+import com.example.wgapp.models.Commune;
+import com.example.wgapp.models.Stock;
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import io.grpc.Context;
+
+import static androidx.core.content.ContextCompat.startActivity;
+import static androidx.core.content.ContextCompat.startForegroundService;
+
 public class StocksViewModel extends ViewModel {
+
+
 
     private MutableLiveData<List<String>> stocksList;
     public LiveData<List<String>> getStocksList() {
@@ -27,20 +42,24 @@ public class StocksViewModel extends ViewModel {
         myHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                ArrayList<String> fruitsStringList = new ArrayList<String>();
-                fruitsStringList.add("Mango");
-                fruitsStringList.add("Apple");
-                fruitsStringList.add("Orange");
-                fruitsStringList.add("Banana");
-                fruitsStringList.add("Grapes");
-                long seed = System.nanoTime();
-                Collections.shuffle(fruitsStringList, new Random(seed));
+                ArrayList<String> stocksStringList = new ArrayList<String>();
+                for (CoEvent event : commune.getCoEvents()) {
 
-                stocksList.setValue(fruitsStringList);
+                    if(event.getType().equals(CoEventTypes.STOCK)){
+
+                        //todo map object
+                        Stock stock = new Gson().fromJson(event.getData(), Stock.class);
+
+                        stocksStringList.add(stock.getName());
+                    }
+
+                }
+                stocksList.setValue(stocksStringList);
             }
-        }, 5000);
+        }, 5);
 
     }
+
 
     public StocksViewModel() {
     }
