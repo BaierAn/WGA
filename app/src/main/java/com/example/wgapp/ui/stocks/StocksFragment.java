@@ -1,5 +1,6 @@
 package com.example.wgapp.ui.stocks;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,13 +30,10 @@ public class StocksFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         stocksViewModel =
                 ViewModelProviders.of(this).get(StocksViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_budget, container, false);
-
-        //createStocksButton
-
-
+        View root = inflater.inflate(R.layout.fragment_stocks, container, false);
 
         final ListView stocksListView = root.findViewById(R.id.stocks_list_view);
+
         stocksViewModel.getStocksList().observe(this, new Observer<List<String>>() {
             @Override
             public void onChanged(List<String> stocksList) {

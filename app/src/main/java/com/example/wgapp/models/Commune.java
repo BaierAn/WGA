@@ -16,6 +16,14 @@ public class Commune {
         return coEvents;
     }
 
+    public void setRoommates(List<Roommate> roommates) {
+        this.roommates = roommates;
+    }
+
+    public void setCoEvents(List<CoEvent> coEvents) {
+        this.coEvents = coEvents;
+    }
+
     public  Commune(){
 
     }

@@ -15,6 +15,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.wgapp.MainActivity;
 import com.example.wgapp.models.CoEvent;
 import com.example.wgapp.models.CoEventTypes;
 import com.example.wgapp.models.Commune;
@@ -45,12 +46,12 @@ public class BudgetViewModel extends ViewModel {
             @Override
             public void run() {
                 ArrayList<String> budgetStringList = new ArrayList<String>();
-                for (CoEvent event : commune.getCoEvents()) {
+                for (CoEvent event : MainActivity.getCommune().getCoEvents()) {
                     budgetStringList.addAll(CalculateBudget( event));
                 }
                 budgetList.setValue(budgetStringList);
             }
-        }, 5000);
+        }, 5);
 
     }
 
@@ -61,7 +62,7 @@ public class BudgetViewModel extends ViewModel {
 
             case STOCK:
                 budgetList.addAll(CalculateStock(new Gson().fromJson(event.getData(), Stock.class)));
-                break;
+                return budgetList;
 
             case RESOURCE:
                 CalculateResources();
@@ -80,28 +81,31 @@ public class BudgetViewModel extends ViewModel {
 
         switch(stock.getStockType()){
             case SHARE:
-                float fragment  = stock.getTotalCost() / com.getRoommates().size();
+                float fragment  = stock.getTotalCost() / MainActivity.getCommune().getRoommates().size();
                 float costValue = 0 ;
-                if(stock.getRommmateId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
-                    for (Roommate mate  : com.getRoommates()) {
-                        if(!stock.getRommmateId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                //todo add firebaseuser
+                if(stock.getRommmateId().equals("1")){//FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                    for (Roommate mate  : MainActivity.getCommune().getRoommates()) {
+                        if(stock.getRommmateId().equals(mate.id)){//FirebaseAuth.getInstance().getCurrentUser().getUid())){
+
+                        }else{
 
                             budgetList.add("get from " +mate.name + " : +" + fragment +"€");
+
                         }
                     }
                 }else{
                     budgetList.add("owe to " + stock.getRommmateId() + " : -" + fragment +"€");
 
                 }
-
-                break;
+                return budgetList;
             case SINGLEUSE:
                 //todo implement singleuse
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + stock.getStockType());
         }
-
+        return budgetList;
     }
     private void CalculateResources(){
 

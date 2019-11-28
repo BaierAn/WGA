@@ -20,7 +20,8 @@ public class Stock implements Serializable {
             this.totalCost = totalCost;
             StockType = stockType;
             this.name = name;
-            this.rommmateId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            //todo chang to firebase user
+            this.rommmateId = "1";//FirebaseAuth.getInstance().getCurrentUser().getUid();
         }
         public String getRommmateId() {
             return rommmateId;

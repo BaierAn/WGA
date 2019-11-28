@@ -19,14 +19,21 @@
             </intent-filter>
 
         </activity>
-
         <activity android:name=".ui.signIn.FirebaseUIActivity"
             android:label="@string/firebaseui_title_text">
-        <intent-filter>
-            <action android:name="android.intent.action.LAUNCH" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
+            <intent-filter>
+                <action android:name="android.intent.action.LAUNCH" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.stocks.StockCreationActivity"
+            android:label="@string/title_stocks">
+            <intent-filter>
+                <action android:name="android.intent.action.LAUNCH" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
 
     </application>
 

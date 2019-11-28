@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 
+import com.example.wgapp.MainActivity;
 import com.example.wgapp.models.CoEvent;
 import com.example.wgapp.models.CoEventTypes;
 import com.example.wgapp.models.Commune;
@@ -43,14 +44,15 @@ public class StocksViewModel extends ViewModel {
             @Override
             public void run() {
                 ArrayList<String> stocksStringList = new ArrayList<String>();
-                for (CoEvent event : commune.getCoEvents()) {
+                for (CoEvent event : MainActivity.getCommune().getCoEvents()) {
 
                     if(event.getType().equals(CoEventTypes.STOCK)){
 
-                        //todo map object
+                        //todo map object check for null object
                         Stock stock = new Gson().fromJson(event.getData(), Stock.class);
-
-                        stocksStringList.add(stock.getName());
+                        if(stock != null){
+                            stocksStringList.add("Roommate: " +stock.getName() + " Amount:" + stock.getTotalAmount() + " Cost:" +stock.getTotalCost());
+                        }
                     }
 
                 }

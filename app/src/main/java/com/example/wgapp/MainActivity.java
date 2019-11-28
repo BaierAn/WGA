@@ -2,7 +2,12 @@ package com.example.wgapp;
 
 import android.os.Bundle;
 
+import com.example.wgapp.models.CoEvent;
+import com.example.wgapp.models.CoEventTypes;
 import com.example.wgapp.models.Commune;
+import com.example.wgapp.models.Roommate;
+import com.example.wgapp.models.Stock;
+import com.example.wgapp.models.StockCreationTypes;
 import com.example.wgapp.ui.signIn.FirebaseUIActivity;
 import com.example.wgapp.ui.stocks.StockCreationActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -13,40 +18,31 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.EmailAuthProvider;
-import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthSettings;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GithubAuthProvider;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.auth.PhoneAuthCredential;
-import com.google.firebase.auth.PhoneAuthProvider;
-import com.google.firebase.auth.PlayGamesAuthProvider;
-import com.google.firebase.auth.SignInMethodQueryResult;
-import com.google.firebase.auth.UserInfo;
-import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.gson.Gson;
+
 import android.content.Intent;
+import android.view.View;
+
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
 
 
-    private Commune commune;
-
+    private static Commune commune = new Commune();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         initTestData();
 
         setContentView(R.layout.activity_main);
@@ -61,11 +57,10 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
         // [START check_current_user]
 
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            setContentView(R.layout.activity_main);
-        } else {
+        //todo add firebaseUser
+        //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        Roommate user = new Roommate(10, "ram", "1");
+        if (user == null) {
             final AppCompatActivity self = this;
            new Thread(
                    new Runnable() {
@@ -83,9 +78,28 @@ public class MainActivity extends AppCompatActivity {
 
     public void initTestData(){
 
+        if(commune.getRoommates().size() < 1){
+            ArrayList<Roommate> rl = new ArrayList<Roommate>();
+
+            rl.add(new Roommate(10, "ram", "1"));
+            rl.add(new Roommate(10, "ban", "2"));
+            rl.add(new Roommate(10, "dan", "3"));
+
+
+
+            Stock stockData = new Stock(10,30,StockCreationTypes.SHARE,"Testi");
+
+            CoEvent stockCoEvent = new CoEvent(CoEventTypes.STOCK, new Gson().toJson(stockData));
+
+            MainActivity.addEvent(stockCoEvent);
+
+            commune.setRoommates(rl);
+
+
+        }
     }
 
-    public void createNewStock(){
+    public void createNewStock(View view){
         Intent intent = new Intent(this , StockCreationActivity.class);
         startActivity(intent);
     }
@@ -123,4 +137,17 @@ public class MainActivity extends AppCompatActivity {
         // [END auth_sign_out]
     }
 
+    public static Commune getCommune() {
+        return commune;
+    }
+
+    public static void setCommune(Commune commune) {
+        MainActivity.commune = commune;
+    }
+
+    public static void addEvent(CoEvent coEvent) {
+        List<CoEvent> l = MainActivity.commune.getCoEvents();
+        l.add(coEvent);
+        MainActivity.commune.setCoEvents(l);
+    }
 }

@@ -9,7 +9,18 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        >
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/createStocksButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center"
+            android:clickable="true"
+            android:onClick="createNewStock"
+            app:srcCompat="@android:drawable/ic_menu_add" />
 
         <ListView
             android:id="@+id/stocks_list_view"
@@ -20,14 +31,7 @@
         </ListView>
 
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/createStocksButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:clickable="true"
-            android:onClick="createNewStock"
-            app:srcCompat="@android:drawable/ic_menu_add" />
+
 
     </FrameLayout>
 
