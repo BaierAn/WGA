@@ -10,10 +10,7 @@ public class Stock implements Serializable {
         private float totalCost;
         private StockCreationTypes StockType;
         private String name;
-
-
-
-    private String rommmateId;
+        private String rommmateId;
 
         public Stock(int totalAmount, float totalCost, StockCreationTypes stockType, String name) {
             this.totalAmount = totalAmount;
@@ -23,6 +20,8 @@ public class Stock implements Serializable {
             //todo chang to firebase user
             this.rommmateId = "1";//FirebaseAuth.getInstance().getCurrentUser().getUid();
         }
+
+
         public String getRommmateId() {
             return rommmateId;
         }
