@@ -14,38 +14,32 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/signInIcon"
-            style="@style/ThemeOverlay.FirebaseIcon"
+        <TextView
+            android:id="@+id/CreateWGBanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/ThemeOverlay.MyTextDetail"
+            android:text="@string/create_com" />
+        <EditText
+            android:id="@+id/WGNAmeInput"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/desc_firebase_lockup"
-            android:src="@drawable/ic_home_black_24dp" />
+            android:layout_centerInParent="true"
+            android:text="@string/app_name"
+            android:visibility="visible" />
 
         <Button
-            android:id="@+id/signInButton"
+            android:id="@+id/createButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/create_com"
-            android:theme="@style/ThemeOverlay.MyDarkButton"
-            android:visibility="visible" />
-
-        <Button
-            android:id="@+id/signOutButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/join_com"
+            android:onClick="createCommune"
             android:theme="@style/ThemeOverlay.MyDarkButton" />
 
-
     </LinearLayout>
-    <TextView
-        android:id="@+id/status"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/ThemeOverlay.MyTextDetail"
-        android:text="@string/already_joined" />
+
+
+
 
 </LinearLayout>

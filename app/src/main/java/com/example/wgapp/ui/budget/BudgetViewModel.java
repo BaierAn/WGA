@@ -86,11 +86,11 @@ public class BudgetViewModel extends ViewModel {
                 //todo add firebaseuser
                 if(stock.getRommmateId().equals("1")){//FirebaseAuth.getInstance().getCurrentUser().getUid())){
                     for (Roommate mate  : MainActivity.getCommune().getRoommates()) {
-                        if(stock.getRommmateId().equals(mate.id)){//FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                        if(stock.getRommmateId().equals(mate.getId())){//FirebaseAuth.getInstance().getCurrentUser().getUid())){
 
                         }else{
 
-                            budgetList.add("get from " +mate.name + " : +" + fragment +"€");
+                            budgetList.add("get from " +mate.getDisplayName() + " : +" + fragment +"€");
 
                         }
                     }

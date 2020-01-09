@@ -31,11 +31,11 @@ public class SettingsViewModel extends ViewModel {
             @Override
             public void run() {
                 ArrayList<String> fruitsStringList = new ArrayList<String>();
-                fruitsStringList.add("Mango");
-                fruitsStringList.add("Apple");
-                fruitsStringList.add("Orange");
-                fruitsStringList.add("Banana");
-                fruitsStringList.add("Grapes");
+                fruitsStringList.add("EventLog");
+                fruitsStringList.add("Share Invitation Link");
+                fruitsStringList.add("User Data");
+                fruitsStringList.add("Leave WG");
+                fruitsStringList.add("Logout");
                 long seed = System.nanoTime();
                 Collections.shuffle(fruitsStringList, new Random(seed));
 

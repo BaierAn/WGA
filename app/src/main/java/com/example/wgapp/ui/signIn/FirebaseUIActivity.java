@@ -8,6 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.wgapp.R;
+import com.example.wgapp.models.Roommate;
+import com.example.wgapp.ui.start.StartScreenActivity;
+import com.example.wgapp.util.Database;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -66,6 +69,13 @@ public class FirebaseUIActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                Roommate rm = new Roommate(0, user);
+                Database db = new Database();
+                db.writeToDb("User/"+user.getUid(), rm);
+
+                Intent intent = new Intent(this, StartScreenActivity.class);
+                startActivity(intent);
                 // ...
             } else {
                 // Sign in failed. If response is null the user canceled the

@@ -9,7 +9,9 @@ import com.example.wgapp.models.Roommate;
 import com.example.wgapp.models.Stock;
 import com.example.wgapp.models.StockCreationTypes;
 import com.example.wgapp.ui.signIn.FirebaseUIActivity;
+import com.example.wgapp.ui.start.StartScreenActivity;
 import com.example.wgapp.ui.stocks.StockCreationActivity;
+import com.example.wgapp.util.Database;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -57,9 +59,11 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
         // [START check_current_user]
 
-        //todo add firebaseUser
-        //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        Roommate user = new Roommate(10, "ram", "1");
+        //Todo check for invitation LINK
+
+
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {
             final AppCompatActivity self = this;
            new Thread(
@@ -71,6 +75,17 @@ public class MainActivity extends AppCompatActivity {
                        }
                    }
            ).start();
+        }else{
+            Database db = new Database();
+            Roommate localUser = db.readUserFromDb("User/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+            if(localUser != null || localUser.getCommuneID() != "None"){
+                commune = db.readCommuneFromDb(localUser.getCommuneID());
+            }else{
+                Intent intent = new Intent(this, StartScreenActivity.class);
+                startActivity(intent);
+            }
+
+
         }
         // [END check_current_user]
 
@@ -78,15 +93,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void initTestData(){
 
-        if(commune.getRoommates().size() < 1){
+        Database db = new Database();
+        commune.setCommuneId("123");
+
+       // if(commune.getRoommates().size() < 1){
             ArrayList<Roommate> rl = new ArrayList<Roommate>();
 
-            rl.add(new Roommate(10, "ram", "1"));
-            rl.add(new Roommate(10, "ban", "2"));
-            rl.add(new Roommate(10, "dan", "3"));
-
-
-
+            rl.add(new Roommate(10, FirebaseAuth.getInstance().getCurrentUser()));
             Stock stockData = new Stock(10,30,StockCreationTypes.SHARE,"Testi");
 
             CoEvent stockCoEvent = new CoEvent(CoEventTypes.STOCK, new Gson().toJson(stockData));
@@ -95,8 +108,14 @@ public class MainActivity extends AppCompatActivity {
 
             commune.setRoommates(rl);
 
+         //db.basicReadWrite(commune);
+         //db.readFromDb();
+            String id1 =  "123";
+            String id2 =  "223";
+         db.writeToDb("User/"+"mcVIEWuPmIfSYOQFKwIOblHqQa32", commune.getRoommates().get(0) );
 
-        }
+        db.readUserFromDb("User/"+"mcVIEWuPmIfSYOQFKwIOblHqQa32");
+       // }
     }
 
     public void createNewStock(View view){

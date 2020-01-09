@@ -15,6 +15,14 @@ public class CoEvent implements Serializable {
         this.data = data;
     }
 
+    public CoEvent(){
+
+    }
+
+    public void setDateTime(Date dateTime) {
+        this.dateTime = dateTime;
+    }
+
     public CoEventTypes getType() {
         return type;
     }
