@@ -19,24 +19,33 @@
             style="@style/ThemeOverlay.FirebaseIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/desc_firebase_lockup"
-            android:src="@drawable/ic_home_black_24dp" />
+            android:contentDescription="@string/desc_firebase_lockup"/>
 
         <Button
-            android:id="@+id/signInButton"
+            android:id="@+id/createButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/create_com"
             android:theme="@style/ThemeOverlay.MyDarkButton"
+            android:onClick="linkToCreateComAc"
             android:visibility="visible" />
 
+        <Button
+            android:id="@+id/jointButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/join_com"
+            android:onClick="linkToJoinComAc"
+            android:theme="@style/ThemeOverlay.MyDarkButton" />
         <Button
             android:id="@+id/signOutButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/join_com"
+            android:text="@string/sign_out"
+            android:onClick="LogOut"
             android:theme="@style/ThemeOverlay.MyDarkButton" />
 
 

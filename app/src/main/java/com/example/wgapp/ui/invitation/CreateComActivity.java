@@ -29,22 +29,24 @@ public class CreateComActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_com);
-        InputName = (EditText) findViewById(R.id.StockCreationInputName);
+        InputName = (EditText) findViewById(R.id.WGNameInput);
     }
 
     public void createCommune(View view){
         Commune commune = new Commune();
-        //create commune
 
-
-        Database db = new Database();
-        Roommate r = db.readUserFromDb("User/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
-        commune.addRommate(r);
+        Roommate usr = MainActivity.getLocalUser();
         commune.setCommuneLink(createLink());
         commune.setCommuneId(UUID.randomUUID().toString());
-        commune.setCommuneName(InputName.getText().toString());
+        usr.setCommuneID(commune.getCommuneId());
+        MainActivity.setLocalUser(usr);
+        MainActivity.getUserWriteRef().setValue(usr);
+        commune.addRommate(usr);
 
-        db.writeToDb("Commune/"+commune.getCommuneId(),commune);
+        String test = InputName.getText().toString();
+        commune.setCommuneName(test);
+        MainActivity.initCommuneDataBase();
+        MainActivity.getCommuneWriteRef().setValue(commune);
 
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

@@ -30,18 +30,15 @@ public class SettingsViewModel extends ViewModel {
         myHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                ArrayList<String> fruitsStringList = new ArrayList<String>();
-                fruitsStringList.add("EventLog");
-                fruitsStringList.add("Share Invitation Link");
-                fruitsStringList.add("User Data");
-                fruitsStringList.add("Leave WG");
-                fruitsStringList.add("Logout");
-                long seed = System.nanoTime();
-                Collections.shuffle(fruitsStringList, new Random(seed));
-
-                settingsList.setValue(fruitsStringList);
+                ArrayList<String> SettingsStringList = new ArrayList<String>();
+                SettingsStringList.add("EventLog");
+                SettingsStringList.add("Share Invitation Link");
+                SettingsStringList.add("User Data");
+                SettingsStringList.add("Leave WG");
+                SettingsStringList.add("Logout");
+                settingsList.setValue(SettingsStringList);
             }
-        }, 5000);
+        }, 1);
 
     }
     public SettingsViewModel() {

@@ -31,17 +31,14 @@ public class ResourcesViewModel extends ViewModel {
             @Override
             public void run() {
                 ArrayList<String> fruitsStringList = new ArrayList<String>();
-                fruitsStringList.add("Mango");
-                fruitsStringList.add("Apple");
-                fruitsStringList.add("Orange");
-                fruitsStringList.add("Banana");
-                fruitsStringList.add("Grapes");
+                fruitsStringList.add("poop");
+
                 long seed = System.nanoTime();
                 Collections.shuffle(fruitsStringList, new Random(seed));
 
                 resourcesList.setValue(fruitsStringList);
             }
-        }, 5000);
+        }, 1);
 
     }
 

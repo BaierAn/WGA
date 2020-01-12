@@ -1,5 +1,6 @@
 package com.example.wgapp.ui.signIn;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.wgapp.MainActivity;
 import com.example.wgapp.R;
 import com.example.wgapp.models.Roommate;
 import com.example.wgapp.ui.start.StartScreenActivity;
@@ -71,8 +73,8 @@ public class FirebaseUIActivity extends AppCompatActivity {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                 Roommate rm = new Roommate(0, user);
-                Database db = new Database();
-                db.writeToDb("User/"+user.getUid(), rm);
+                MainActivity.initUserDataBase();
+                MainActivity.getUserWriteRef().setValue(rm);
 
                 Intent intent = new Intent(this, StartScreenActivity.class);
                 startActivity(intent);
@@ -87,10 +89,10 @@ public class FirebaseUIActivity extends AppCompatActivity {
     }
     // [END auth_fui_result]
 
-    public void signOut() {
+    public static void signOut(Context con) {
         // [START auth_fui_signout]
         AuthUI.getInstance()
-                .signOut(this)
+                .signOut(con)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     public void onComplete(@NonNull Task<Void> task) {
                         // ...

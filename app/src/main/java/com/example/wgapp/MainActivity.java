@@ -1,5 +1,7 @@
 package com.example.wgapp;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 
 import com.example.wgapp.models.CoEvent;
@@ -12,6 +14,9 @@ import com.example.wgapp.ui.signIn.FirebaseUIActivity;
 import com.example.wgapp.ui.start.StartScreenActivity;
 import com.example.wgapp.ui.stocks.StockCreationActivity;
 import com.example.wgapp.util.Database;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.TaskCompletionSource;
+import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,26 +32,43 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
 
 
 public class MainActivity extends AppCompatActivity {
 
+    private ProgressDialog mProgressDialog;
+
+
+    private static DatabaseReference CommuneReadRef;
+    private static DatabaseReference CommuneWriteRef;
+
+    private static DatabaseReference UserReadRef;
+    private static DatabaseReference UserWriteRef;
 
     private static Commune commune = new Commune();
+    private static Roommate localUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initTestData();
-
+        //initTestData();
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -63,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {
             final AppCompatActivity self = this;
@@ -76,14 +99,16 @@ public class MainActivity extends AppCompatActivity {
                    }
            ).start();
         }else{
-            Database db = new Database();
-            Roommate localUser = db.readUserFromDb("User/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
-            if(localUser != null || localUser.getCommuneID() != "None"){
-                commune = db.readCommuneFromDb(localUser.getCommuneID());
-            }else{
-                Intent intent = new Intent(this, StartScreenActivity.class);
-                startActivity(intent);
-            }
+            //Database db = new Database();
+            //Tasks.await(taskFromFirebase);
+
+
+
+            //initUserDataBase();
+            //localUser = getUserDataBaseSynchron();
+            UserWriteRef = FirebaseDatabase.getInstance().getReference().child("User/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+            UserReadRef = FirebaseDatabase.getInstance().getReference().child("User/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+            mCheckInforInServer(UserReadRef);
 
 
         }
@@ -91,32 +116,157 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void initTestData(){
 
-        Database db = new Database();
-        commune.setCommuneId("123");
 
-       // if(commune.getRoommates().size() < 1){
-            ArrayList<Roommate> rl = new ArrayList<Roommate>();
+    public static void initUserDataBase(){
+        if (UserReadRef == null || UserWriteRef == null){
+            UserReadRef = FirebaseDatabase.getInstance().getReference().child("User/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+            UserWriteRef = FirebaseDatabase.getInstance().getReference().child("User/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-            rl.add(new Roommate(10, FirebaseAuth.getInstance().getCurrentUser()));
-            Stock stockData = new Stock(10,30,StockCreationTypes.SHARE,"Testi");
+            ValueEventListener postListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // Get Post object and use the values to update the UI
+                    Roommate mate = dataSnapshot.getValue(Roommate.class);
+                    localUser = mate;
 
-            CoEvent stockCoEvent = new CoEvent(CoEventTypes.STOCK, new Gson().toJson(stockData));
-
-            MainActivity.addEvent(stockCoEvent);
-
-            commune.setRoommates(rl);
-
-         //db.basicReadWrite(commune);
-         //db.readFromDb();
-            String id1 =  "123";
-            String id2 =  "223";
-         db.writeToDb("User/"+"mcVIEWuPmIfSYOQFKwIOblHqQa32", commune.getRoommates().get(0) );
-
-        db.readUserFromDb("User/"+"mcVIEWuPmIfSYOQFKwIOblHqQa32");
-       // }
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // Getting Post failed, log a message
+                    Log.w("TAG", "loadPost:onCancelled", databaseError.toException());
+                    // ...
+                }
+            };
+            UserReadRef.addValueEventListener(postListener);
+        }
     }
+
+    public static Roommate getUserDataBaseSynchron(){
+        final CountDownLatch  done = new CountDownLatch(1);
+        UserReadRef = FirebaseDatabase.getInstance().getReference().child("User/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+            ValueEventListener postListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // Get Post object and use the values to update the UI
+                    Roommate mate = dataSnapshot.getValue(Roommate.class);
+                    localUser = mate;
+                    done.countDown();
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // Getting Post failed, log a message
+                    Log.w("TAG", "loadPost:onCancelled", databaseError.toException());
+                    // ...
+                }
+            };
+            UserReadRef.addValueEventListener(postListener);
+        try {
+            done.await(); //it will wait till the response is received from firebase.
+        } catch(InterruptedException e) {
+            e.printStackTrace();
+        }
+        return localUser;
+    }
+
+
+
+
+    public static void initCommuneDataBase(){
+
+        if (CommuneReadRef == null || CommuneWriteRef == null){
+            CommuneReadRef = FirebaseDatabase.getInstance().getReference().child("Commune/"+localUser.getCommuneID());
+            CommuneWriteRef = FirebaseDatabase.getInstance().getReference().child("Commune/"+localUser.getCommuneID());
+
+            ValueEventListener postListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // Get Post object and use the values to update the UI
+                    Commune com = dataSnapshot.getValue(Commune.class);
+                    commune = com;
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // Getting Post failed, log a message
+                    Log.w("TAG", "loadPost:onCancelled", databaseError.toException());
+                    // ...
+                }
+            };
+            CommuneReadRef.addValueEventListener(postListener);
+        }
+
+    }
+
+
+
+    public interface OnGetDataListener {
+        //this is for callbacks
+        void onSuccess(DataSnapshot dataSnapshot);
+        void onStart();
+        void onFailure(DatabaseError databaseError);
+    }
+
+    public void mReadDataOnce(DatabaseReference ref, final OnGetDataListener listener) {
+        listener.onStart();
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                listener.onSuccess(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onFailure(databaseError);
+            }
+        });
+
+    }
+
+    private void mCheckInforInServer(DatabaseReference ref) {
+        final Context self = this;
+        mReadDataOnce(ref, new OnGetDataListener() {
+            @Override
+            public void onStart() {
+                //DO SOME THING WHEN START GET DATA HERE
+                if (mProgressDialog == null) {
+                    mProgressDialog = new ProgressDialog( self);
+                    mProgressDialog.setMessage("Loading User Data");
+                    mProgressDialog.setIndeterminate(true);
+                }
+
+                mProgressDialog.show();
+            }
+
+            @Override
+            public void onSuccess(DataSnapshot data) {
+                if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                    mProgressDialog.dismiss();
+                    Roommate mate = data.getValue(Roommate.class);
+                    localUser = mate;
+
+                    if(localUser == null || localUser.getCommuneID() == "None"){
+                        Intent intent = new Intent(self, StartScreenActivity.class);
+                        startActivity(intent);
+                    }else{
+                        initCommuneDataBase();
+                    }
+                }
+
+                //DO SOME THING WHEN GET DATA SUCCESS HERE
+            }
+
+            @Override
+            public void onFailure(DatabaseError databaseError) {
+                //DO SOME THING WHEN GET DATA FAILED HERE
+            }
+        });
+
+    }
+
+
+
+
+
 
     public void createNewStock(View view){
         Intent intent = new Intent(this , StockCreationActivity.class);
@@ -168,5 +318,45 @@ public class MainActivity extends AppCompatActivity {
         List<CoEvent> l = MainActivity.commune.getCoEvents();
         l.add(coEvent);
         MainActivity.commune.setCoEvents(l);
+    }
+
+
+    public static void setCommuneReadRef(DatabaseReference communeReadRef) {
+        CommuneReadRef = communeReadRef;
+    }
+
+    public static void setCommuneWriteRef(DatabaseReference communeWriteRef) {
+        CommuneWriteRef = communeWriteRef;
+    }
+
+    public static void setUserReadRef(DatabaseReference userReadRef) {
+        UserReadRef = userReadRef;
+    }
+
+    public static void setUserWriteRef(DatabaseReference userWriteRef) {
+        UserWriteRef = userWriteRef;
+    }
+
+    public static DatabaseReference getCommuneReadRef() {
+        return CommuneReadRef;
+    }
+
+    public static DatabaseReference getCommuneWriteRef() {
+        return CommuneWriteRef;
+    }
+
+    public static DatabaseReference getUserReadRef() {
+        return UserReadRef;
+    }
+
+    public static DatabaseReference getUserWriteRef() {
+        return UserWriteRef;
+    }
+
+    public static void setLocalUser(Roommate localUser) {
+        MainActivity.localUser = localUser;
+    }
+    public static Roommate getLocalUser() {
+        return localUser;
     }
 }

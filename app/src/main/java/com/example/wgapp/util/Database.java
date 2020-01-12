@@ -1,5 +1,6 @@
 package com.example.wgapp.util;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -20,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Database {
+public class Database extends AsyncTask<String, Void, Boolean> {
 
     private String TAG = "bla";
     private Commune commune;
@@ -100,4 +101,9 @@ public class Database {
 
     }
 
+    @Override
+    protected Boolean doInBackground(String... strings) {
+
+        return null;
+    }
 }

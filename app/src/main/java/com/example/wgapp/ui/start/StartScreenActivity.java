@@ -3,13 +3,18 @@ package com.example.wgapp.ui.start;
 import android.content.Intent;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.wgapp.MainActivity;
 import com.example.wgapp.R;
+import com.example.wgapp.ui.invitation.CreateComActivity;
+import com.example.wgapp.ui.invitation.JoinComActivity;
+import com.example.wgapp.ui.signIn.FirebaseUIActivity;
 import com.example.wgapp.util.DownloadImageTask;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
@@ -34,5 +39,20 @@ public class StartScreenActivity extends AppCompatActivity {
                 .execute(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl().toString());
     }
 
+    public void linkToCreateComAc(View view){
+        Intent intent = new Intent(this, CreateComActivity.class);
+        startActivity(intent);
+    }
 
+    public void linkToJoinComAc(View view){
+        Intent intent = new Intent(this, JoinComActivity.class);
+        startActivity(intent);
+    }
+
+    public void LogOut(View view){
+
+        FirebaseUIActivity.signOut(this);
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 }
