@@ -52,7 +52,6 @@ public class StockCreationActivity extends AppCompatActivity {
         TotalCostInput = findViewById(R.id.StockCreationTotalCostInput);
 
         TotalAmountInput = findViewById(R.id.StockCreationTotalAmountInput);
-        setContentView(R.layout.activity_stocks_creation);
 
 
     }
@@ -66,25 +65,33 @@ public class StockCreationActivity extends AppCompatActivity {
     }
 
     public void createStock(View view){
-        /*Stock stockData = new Stock(Integer.parseInt(TotalAmountInput.getText().toString()),
-                                    Integer.parseInt(TotalCostInput.getText().toString()),
+
+        int a = Integer.parseInt(TotalAmountInput.getText().toString());
+        float b = Float.parseFloat(TotalCostInput.getText().toString());
+        StockCreationTypes c = (StockCreationTypes)DropdownType.getSelectedItem();
+        String d = InputName.getText().toString();
+
+
+        Stock stockData = new Stock(Integer.parseInt(TotalAmountInput.getText().toString()),
+                                    Float.parseFloat(TotalCostInput.getText().toString()),
                                     (StockCreationTypes)DropdownType.getSelectedItem(),
                                     InputName.getText().toString());
-        */
-        Stock stockData = new Stock(60,
+
+        /*Stock stockData = new Stock(60,
                 60,
                 StockCreationTypes.SHARE,
                 "bananarama");
-
+*/
         CoEvent stockCoEvent = new CoEvent(CoEventTypes.STOCK, new Gson().toJson(stockData));
 
-        MainActivity.addEvent(stockCoEvent);
+        MainActivity.getCommune().addCoEvent(stockCoEvent);
+
+        MainActivity.getCommuneWriteRef().setValue(MainActivity.getCommune());
 
         Intent intent = new Intent(this, MainActivity.class);
-
-
         startActivity(intent);
         //todo add event to commune
+
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.wgapp.models;
 
+import com.example.wgapp.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.Serializable;
@@ -18,7 +19,7 @@ public class Stock implements Serializable {
             StockType = stockType;
             this.name = name;
             //todo chang to firebase user
-            this.rommmateId = "1";//FirebaseAuth.getInstance().getCurrentUser().getUid();
+            this.rommmateId = MainActivity.getLocalUser().getId();//FirebaseAuth.getInstance().getCurrentUser().getUid();
         }
 
 

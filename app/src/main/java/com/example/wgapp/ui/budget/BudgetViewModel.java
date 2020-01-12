@@ -84,7 +84,7 @@ public class BudgetViewModel extends ViewModel {
                 float fragment  = stock.getTotalCost() / MainActivity.getCommune().getRoommates().size();
                 float costValue = 0 ;
                 //todo add firebaseuser
-                if(stock.getRommmateId().equals("1")){//FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                if(stock.getRommmateId().equals(MainActivity.getLocalUser().getId())){//FirebaseAuth.getInstance().getCurrentUser().getUid())){
                     for (Roommate mate  : MainActivity.getCommune().getRoommates()) {
                         if(stock.getRommmateId().equals(mate.getId())){//FirebaseAuth.getInstance().getCurrentUser().getUid())){
 

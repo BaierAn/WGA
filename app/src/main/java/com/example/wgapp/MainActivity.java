@@ -314,12 +314,6 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.commune = commune;
     }
 
-    public static void addEvent(CoEvent coEvent) {
-        List<CoEvent> l = MainActivity.commune.getCoEvents();
-        l.add(coEvent);
-        MainActivity.commune.setCoEvents(l);
-    }
-
 
     public static void setCommuneReadRef(DatabaseReference communeReadRef) {
         CommuneReadRef = communeReadRef;

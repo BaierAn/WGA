@@ -51,7 +51,7 @@ public class StocksViewModel extends ViewModel {
                         //todo map object check for null object
                         Stock stock = new Gson().fromJson(event.getData(), Stock.class);
                         if(stock != null){
-                            stocksStringList.add("Roommate: " +stock.getName() + " Amount:" + stock.getTotalAmount() + " Cost:" +stock.getTotalCost());
+                            stocksStringList.add("Name: " +stock.getName() +"|| Roommate"+ stock.getRommmateId()   +"|| Amount: " + stock.getTotalAmount() + "|| Cost: " +stock.getTotalCost());
                         }
                     }
 
