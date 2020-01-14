@@ -1,11 +1,16 @@
 package com.example.wgapp.util;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.Pair;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.wgapp.ui.stocks.StockCreationActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -41,12 +46,14 @@ public class BarcodeScanningActivity extends AppCompatActivity {
         // FirebaseVisionBarcodeDetector detector = FirebaseVision.getInstance()
         //        .getVisionBarcodeDetector(options);
         // [END get_detector]
-
+        final Context self = this;
         // [START run_detector]
         Task<List<FirebaseVisionBarcode>> result = detector.detectInImage(image)
                 .addOnSuccessListener(new OnSuccessListener<List<FirebaseVisionBarcode>>() {
                     @Override
                     public void onSuccess(List<FirebaseVisionBarcode> barcodes) {
+                        Bundle extras = getIntent().getExtras();
+                        String data;
                         // Task completed successfully
                         // [START_EXCLUDE]
                         // [START get_barcodes]
@@ -71,6 +78,33 @@ public class BarcodeScanningActivity extends AppCompatActivity {
                                     String url = barcode.getUrl().getUrl();
                                     break;
                             }
+
+                            if (extras != null) {
+                                data = extras.getString("type");
+                                switch (data) {
+                                    case "StockScanBarcode":
+                                        Intent intent = new Intent( self, StockCreationActivity.class);
+                                        intent.putExtra("type", "Barcode");
+                                        intent.putExtra("data", rawValue);
+                                        startActivity(intent);
+                                        break;
+                                    case "StockGetLastInput":
+                                        Intent intent2 = new Intent(self, StockCreationActivity.class);
+                                        intent2.putExtra("type", "Input");
+                                        intent2.putExtra("data", rawValue);
+                                        startActivity(intent2);
+                                        break;
+
+                                }
+
+
+                        }
+
+
+
+
+                            // and get whatever type user account id is
+
                         }
                         // [END get_barcodes]
                         // [END_EXCLUDE]

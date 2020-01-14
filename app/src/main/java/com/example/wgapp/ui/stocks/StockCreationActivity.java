@@ -18,6 +18,7 @@ import com.example.wgapp.models.CoEventTypes;
 import com.example.wgapp.models.Stock;
 import com.example.wgapp.models.StockCreationTypes;
 import com.example.wgapp.ui.signIn.FirebaseUIActivity;
+import com.example.wgapp.util.BarcodeScanningActivity;
 import com.google.gson.Gson;
 
 public class StockCreationActivity extends AppCompatActivity {
@@ -29,6 +30,8 @@ public class StockCreationActivity extends AppCompatActivity {
      EditText TotalCostInput;
 
      EditText TotalAmountInput;
+
+    EditText Barcode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +45,6 @@ public class StockCreationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_stocks_creation);
 
 
-
         DropdownType = findViewById(R.id.StockCreationDropdownType);
         ArrayAdapter<StockCreationTypes> adapter = new ArrayAdapter<StockCreationTypes>(this, android.R.layout.simple_spinner_dropdown_item, StockCreationTypes.values());
         DropdownType.setAdapter(adapter);
@@ -53,14 +55,46 @@ public class StockCreationActivity extends AppCompatActivity {
 
         TotalAmountInput = findViewById(R.id.StockCreationTotalAmountInput);
 
+        Barcode = findViewById(R.id.StockCreationBarcodeInput);
+
+
+
+        Bundle extras = getIntent().getExtras();
+        String type;
+        String data;
+        if (extras != null) {
+            type = extras.getString("type");
+            switch (type) {
+                case "Barcode":
+                    data = extras.getString("data");
+                    Barcode.setText(data);
+                    break;
+                case "Input":
+                    //todo
+                    data = extras.getString("data");
+                    searchInput(data);
+                    break;
+
+            }
+
+
+        }
+    }
+
+    private void searchInput(String data){
 
     }
 
     public void getLastInput(){
-
+        Intent intent = new Intent(this, BarcodeScanningActivity.class);
+        intent.putExtra("type", "StockGetLastInput");
+        startActivity(intent);
     }
 
     public void scanBarcode(){
+        Intent intent = new Intent(this, BarcodeScanningActivity.class);
+        intent.putExtra("type", "StockScanBarcode");
+        startActivity(intent);
 
     }
 

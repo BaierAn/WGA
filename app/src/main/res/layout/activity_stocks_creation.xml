@@ -60,6 +60,20 @@
         android:ems="10"
         android:inputType="numberSigned" />
 
+    <TextView
+        android:id="@+id/StockCreationBarcodeText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ToDO Barcode" />
+
+    <EditText
+        android:id="@+id/StockCreationBarcodeInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"/>
+
+
+
     <Button
         android:id="@+id/StockCreationBarcodeButton"
         android:layout_width="match_parent"
