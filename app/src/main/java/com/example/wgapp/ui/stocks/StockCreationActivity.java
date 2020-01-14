@@ -20,6 +20,7 @@ import com.example.wgapp.models.StockCreationTypes;
 import com.example.wgapp.ui.signIn.FirebaseUIActivity;
 import com.example.wgapp.util.BarcodeScanningActivity;
 import com.google.gson.Gson;
+import com.google.gson.JsonDeserializer;
 
 public class StockCreationActivity extends AppCompatActivity {
 
@@ -70,9 +71,25 @@ public class StockCreationActivity extends AppCompatActivity {
                     Barcode.setText(data);
                     break;
                 case "Input":
-                    //todo
                     data = extras.getString("data");
-                    searchInput(data);
+                    for (CoEvent event : MainActivity.getCommune().getCoEvents()) {
+                        if(event.getType() == CoEventTypes.STOCK){
+                            if(event.getBarcode().equals(data)){
+                                Gson gson = new Gson();
+                                Stock stock = gson.fromJson(event.getData(), Stock.class);
+
+                                InputName.setText(stock.getName());
+                                TotalCostInput.setText(String.valueOf(stock.getTotalCost()));
+                                TotalAmountInput.setText(String.valueOf(stock.getTotalAmount()));
+                                Barcode.setText(event.getBarcode());
+                                DropdownType.setSelection(((ArrayAdapter) DropdownType.getAdapter()).getPosition(stock.getStockType()));
+
+                            }
+
+                        }
+
+
+                    }
                     break;
 
             }
@@ -81,9 +98,6 @@ public class StockCreationActivity extends AppCompatActivity {
         }
     }
 
-    private void searchInput(String data){
-
-    }
 
     public void getLastInput(){
         Intent intent = new Intent(this, BarcodeScanningActivity.class);
@@ -110,7 +124,6 @@ public class StockCreationActivity extends AppCompatActivity {
                                     Float.parseFloat(TotalCostInput.getText().toString()),
                                     (StockCreationTypes)DropdownType.getSelectedItem(),
                                     InputName.getText().toString());
-
         /*Stock stockData = new Stock(60,
                 60,
                 StockCreationTypes.SHARE,
@@ -118,6 +131,7 @@ public class StockCreationActivity extends AppCompatActivity {
 */
         CoEvent stockCoEvent = new CoEvent(CoEventTypes.STOCK, new Gson().toJson(stockData));
 
+        stockCoEvent.setBarcode(Barcode.getText().toString());
         MainActivity.getCommune().addCoEvent(stockCoEvent);
 
         MainActivity.getCommuneWriteRef().setValue(MainActivity.getCommune());

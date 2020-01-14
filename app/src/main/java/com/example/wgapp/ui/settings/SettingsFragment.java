@@ -98,7 +98,7 @@ public class SettingsFragment extends Fragment {
                         startActivity(intent);
                         break;
                     case "Logout":
-                        FirebaseUIActivity.signOut(getContext());
+                        FirebaseUIActivity.signOut(ge   tContext());
                         Intent signOutintent = new Intent(getContext(), MainActivity.class);
                         startActivity(signOutintent);
                         break;

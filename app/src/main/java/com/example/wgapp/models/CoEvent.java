@@ -8,6 +8,7 @@ public class CoEvent implements Serializable {
     private CoEventTypes type;
     private Date dateTime;
     private String data;
+    private String Barcode = "";
 
     public CoEvent(CoEventTypes type,  String data) {
         this.type = type;
@@ -33,6 +34,14 @@ public class CoEvent implements Serializable {
 
     public String getData() {
         return data;
+    }
+
+    public void setBarcode(String barcode) {
+        Barcode = barcode;
+    }
+
+    public String getBarcode() {
+        return Barcode;
     }
 
     public void setType(CoEventTypes type) {
