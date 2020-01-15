@@ -73,7 +73,6 @@ public class SettingsFragment extends Fragment {
                         Intent usrDatIntent = new Intent(getContext(), PlainTextActivity.class);
                         usrDatIntent.putExtra("data", usrData);
                         startActivity(usrDatIntent);
-                        //todo
                         break;
                     case "Leave WG":
 

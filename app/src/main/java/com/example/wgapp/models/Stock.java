@@ -16,9 +16,9 @@ public class Stock implements Serializable {
         private String userName;
         private String ID;
 
-        public Stock(int totalAmount, float totalCost, StockCreationTypes stockType, String stockName) {
+        public Stock(int totalAmount, int leftAmount, float totalCost, StockCreationTypes stockType, String stockName) {
             this.totalAmount = totalAmount;
-            this.leftAmount = totalAmount;
+            this.leftAmount = leftAmount;
             this.totalCost = totalCost;
             StockType = stockType;
             this.stockName = stockName;

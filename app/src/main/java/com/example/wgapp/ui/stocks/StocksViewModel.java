@@ -1,6 +1,7 @@
 package com.example.wgapp.ui.stocks;
 
 import android.os.Handler;
+import android.util.Pair;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -22,10 +23,10 @@ public class StocksViewModel extends ViewModel {
 
 
 
-    private MutableLiveData<List<String>> stocksList;
-    public LiveData<List<String>> getStocksList() {
+    private MutableLiveData<List<Pair<String,String>>> stocksList;
+    public LiveData<List<Pair<String,String>>> getStocksList() {
         if (stocksList == null) {
-            stocksList = new MutableLiveData<List<String>>();
+            stocksList = new MutableLiveData<List<Pair<String,String>>>();
             loadStocks();
         }
         return stocksList;
@@ -36,29 +37,23 @@ public class StocksViewModel extends ViewModel {
         myHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                ArrayList<String> stocksStringList = new ArrayList<String>();
+                ArrayList<Pair<String,String>> stocksStringList = new ArrayList<Pair<String,String>>();
 
                 Commune c =  MainActivity.getCommune();
                 Roommate a =  MainActivity.getLocalUser();
                 for (CoEvent event : MainActivity.getCommune().getCoEvents()) {
 
                     if(event.getType().equals(CoEventTypes.STOCK)){
-
-                        //todo map object check for null object
                         Stock stock = new Gson().fromJson(event.getData(), Stock.class);
                         if(stock != null){
-                            stocksStringList.add("Name: " +stock.getStockName() +"|| Roommate"+ stock.getUserName()   +"|| Amount: " + stock.getTotalAmount() + "|| Cost: " +stock.getTotalCost());
+                            stocksStringList.add(new Pair<String, String>("Name: " +stock.getStockName() +"|| Roommate"+ stock.getUserName()   +"|| Amount: " + stock.getTotalAmount() + "|| Cost: " +stock.getTotalCost(),event.getData()));
                         }
                     }
-
                 }
                 stocksList.setValue(stocksStringList);
             }
         }, 5);
-
     }
-
-
     public StocksViewModel() {
     }
 

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,16 +52,16 @@ public class StocksFragment extends Fragment {
 
         stocksViewModel.getStocksList();
 
-        stocksViewModel.getStocksList().observe(this, new Observer<List<String>>() {
+        stocksViewModel.getStocksList().observe(this, new Observer<List<Pair<String,String>>>() {
             @Override
-            public void onChanged(List<String> budgetList) {
+            public void onChanged(List<Pair<String,String>> budgetList) {
                 // update UI
                 // android.widget.ListAdapter adapter = new ArrayAdapter<String>( getActivity(),
                 //          android.R.layout.simple_list_item_1, android.R.id.text1, budgetList);
                 // Assign adapter to ListView
                 // budgetListView.setAdapter(adapter);
 
-                mAdapter = new RecyclerViewAdapter((ArrayList<String>) budgetList);
+                mAdapter = new RecyclerViewAdapter((ArrayList<Pair<String,String>>) budgetList);
                 stockRecView.setAdapter(mAdapter);
             }
         });
@@ -80,9 +81,9 @@ public class StocksFragment extends Fragment {
 
 
                 final int position = viewHolder.getAdapterPosition();
-                final String item = mAdapter.getData().get(position);
+                final Pair<String,String> item = mAdapter.getData().get(position);
 
-                mAdapter.removeItem(position);
+                mAdapter.createTookSingleEvent(position);
 
 
                 Snackbar snackbar = Snackbar

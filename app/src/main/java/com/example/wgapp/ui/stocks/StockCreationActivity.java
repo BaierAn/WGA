@@ -149,6 +149,7 @@ public class StockCreationActivity extends AppCompatActivity {
     public void createStock(View view){
 
         Stock stockData = new Stock(Integer.parseInt(TotalAmountInput.getText().toString()),
+                                    Integer.parseInt(TotalAmountInput.getText().toString()),
                                     Float.parseFloat(TotalCostInput.getText().toString()),
                                     (StockCreationTypes)DropdownType.getSelectedItem(),
                                     InputName.getText().toString());

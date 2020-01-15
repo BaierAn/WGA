@@ -1,5 +1,6 @@
 package com.example.wgapp.ui.budget;
 
+import android.util.Pair;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -27,11 +28,10 @@ import com.google.gson.Gson;
 public class BudgetViewModel extends ViewModel {
 
 
-
-    private MutableLiveData<List<String>> budgetList;
-    public LiveData<List<String>> getBudgetList() {
+    private MutableLiveData <List<Pair<String,String>>> budgetList;
+    public LiveData<List<Pair<String,String>>> getBudgetList() {
         if (budgetList == null) {
-            budgetList = new MutableLiveData<List<String>>();
+            budgetList = new MutableLiveData<List<Pair<String,String>>>();
             loadBudget();
         }
         return budgetList;
@@ -45,7 +45,7 @@ public class BudgetViewModel extends ViewModel {
         myHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                ArrayList<String> budgetStringList = new ArrayList<String>();
+                ArrayList<Pair<String,String>> budgetStringList = new ArrayList<Pair<String,String>>();
                 for (CoEvent event : MainActivity.getCommune().getCoEvents()) {
                     budgetStringList.addAll(CalculateBudget( event));
                 }
@@ -56,19 +56,20 @@ public class BudgetViewModel extends ViewModel {
     }
 
 
-    private  ArrayList<String> CalculateBudget(CoEvent event){
-        ArrayList<String> budgetList = new ArrayList<>();
+    private  ArrayList<Pair<String,String>> CalculateBudget(CoEvent event){
+        ArrayList<Pair<String,String>> budgetList = new ArrayList<>();
         switch(event.getType()){
 
             case STOCK:
-                budgetList.addAll(CalculateStock(new Gson().fromJson(event.getData(), Stock.class)));
+                budgetList.addAll(CalculateStock(new Gson().fromJson(event.getData(), Stock.class),event.getData() ));
                 break;
             case PAID:
-                Stock s = new Gson().fromJson(event.getData(), Stock.class);
-                //budgetList;
-                // wenn id gleich
-                // paid dazuschreiben
-                //todo durchsuche
+                for (Pair<String, String> rawStock : budgetList
+                     ) {
+                    if(event.getData().equals(rawStock.second)){
+                        //todo alter ui
+                    }
+                }
                 break;
 
             case RESOURCE:
@@ -82,8 +83,8 @@ public class BudgetViewModel extends ViewModel {
     }
 
 
-    private ArrayList<String> CalculateStock(Stock stock){
-        ArrayList<String> budgetList = new ArrayList<>();
+    private ArrayList<Pair<String,String>> CalculateStock(Stock stock, String stockRaw){
+        ArrayList<Pair<String,String>> budgetList = new ArrayList<>();
         float fragment = 0;
         switch(stock.getStockType()){
             case SHARE:
@@ -101,11 +102,11 @@ public class BudgetViewModel extends ViewModel {
                 if(stock.getRommmateId().equals(mate.getId())){
                 }else{
 
-                    budgetList.add("get from " +mate.getDisplayName() + " : +" + fragment +"€");
+                    budgetList.add(new Pair<String, String>("get from " +mate.getDisplayName() + " : +" + fragment +"€", stockRaw));
                 }
             }
         }else{
-            budgetList.add("owe to " + stock.getUserName() + " : -" + fragment +"€");
+            budgetList.add(new Pair<String, String>("owe to " + stock.getUserName() + " : -" + fragment +"€", stockRaw));
 
         }
         return budgetList;
