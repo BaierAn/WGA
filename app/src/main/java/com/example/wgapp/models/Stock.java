@@ -1,29 +1,37 @@
 package com.example.wgapp.models;
 
 import com.example.wgapp.MainActivity;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public class Stock implements Serializable {
 
         private int totalAmount;
+        private int leftAmount;
         private float totalCost;
         private StockCreationTypes StockType;
-        private String name;
+        private String stockName;
         private String rommmateId;
+        private String userName;
+        private String ID;
 
-        public Stock(int totalAmount, float totalCost, StockCreationTypes stockType, String name) {
+        public Stock(int totalAmount, float totalCost, StockCreationTypes stockType, String stockName) {
             this.totalAmount = totalAmount;
+            this.leftAmount = totalAmount;
             this.totalCost = totalCost;
             StockType = stockType;
-            this.name = name;
-            //todo chang to firebase user
-            this.rommmateId = MainActivity.getLocalUser().getId();//FirebaseAuth.getInstance().getCurrentUser().getUid();
+            this.stockName = stockName;
+            this.rommmateId = MainActivity.getLocalUser().getId();
+            this.userName =  MainActivity.getLocalUser().getDisplayName();
+            this.ID = UUID.randomUUID().toString();
         }
 
+    public void setID(String ID) {
+        this.ID = ID;
+    }
 
-        public String getRommmateId() {
+    public String getRommmateId() {
             return rommmateId;
         }
         public int getTotalAmount() {
@@ -38,10 +46,17 @@ public class Stock implements Serializable {
             return StockType;
         }
 
-        public String getName() {
-            return name;
+        public String getStockName() {
+            return stockName;
         }
 
+    public int getLeftAmount() {
+        return leftAmount;
+    }
+
+    public void takeAmount(){
+            this.leftAmount =- 1;
+        }
         public void setTotalAmount(int totalAmount) {
             this.totalAmount = totalAmount;
         }
@@ -54,10 +69,24 @@ public class Stock implements Serializable {
             StockType = stockType;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public void setStockName(String stockName) {
+            this.stockName = stockName;
         }
 
 
+    public void setTotalCost(float totalCost) {
+        this.totalCost = totalCost;
+    }
 
+    public void setRommmateId(String rommmateId) {
+        this.rommmateId = rommmateId;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
 }

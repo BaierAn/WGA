@@ -8,16 +8,16 @@
     android:layout_height="match_parent"
     android:keepScreenOn="true">
 
-  <com.example.wgapp.util.CameraSourcePreview
+  <com.example.wgapp.util.barcode.CameraSourcePreview
       android:id="@+id/preview"
       android:layout_width="match_parent"
       android:layout_height="match_parent">
 
-    <com.example.wgapp.util.GraphicOverlay
+    <com.example.wgapp.util.barcode.GraphicOverlay
         android:id="@+id/graphicOverlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-  </com.example.wgapp.util.CameraSourcePreview>
+  </com.example.wgapp.util.barcode.CameraSourcePreview>
 
 </LinearLayout>

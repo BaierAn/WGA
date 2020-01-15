@@ -1,4 +1,4 @@
-package com.example.wgapp.util;
+package com.example.wgapp.util.barcode;
 
 import android.app.Activity;
 import android.content.Context;

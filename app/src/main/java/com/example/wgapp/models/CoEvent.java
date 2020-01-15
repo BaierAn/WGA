@@ -2,6 +2,7 @@ package com.example.wgapp.models;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
 public class CoEvent implements Serializable {
 
@@ -9,15 +10,21 @@ public class CoEvent implements Serializable {
     private Date dateTime;
     private String data;
     private String Barcode = "";
+    private String ID;
 
     public CoEvent(CoEventTypes type,  String data) {
         this.type = type;
         this.dateTime = new Date();
         this.data = data;
+        this.ID =  UUID.randomUUID().toString() ;
     }
 
     public CoEvent(){
 
+    }
+
+    public String getID() {
+        return ID;
     }
 
     public void setDateTime(Date dateTime) {

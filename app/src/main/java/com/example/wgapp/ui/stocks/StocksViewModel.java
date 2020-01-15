@@ -1,6 +1,5 @@
 package com.example.wgapp.ui.stocks;
 
-import android.content.Intent;
 import android.os.Handler;
 
 import androidx.lifecycle.LiveData;
@@ -12,18 +11,12 @@ import com.example.wgapp.MainActivity;
 import com.example.wgapp.models.CoEvent;
 import com.example.wgapp.models.CoEventTypes;
 import com.example.wgapp.models.Commune;
+import com.example.wgapp.models.Roommate;
 import com.example.wgapp.models.Stock;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Random;
-
-import io.grpc.Context;
-
-import static androidx.core.content.ContextCompat.startActivity;
-import static androidx.core.content.ContextCompat.startForegroundService;
 
 public class StocksViewModel extends ViewModel {
 
@@ -44,6 +37,9 @@ public class StocksViewModel extends ViewModel {
             @Override
             public void run() {
                 ArrayList<String> stocksStringList = new ArrayList<String>();
+
+                Commune c =  MainActivity.getCommune();
+                Roommate a =  MainActivity.getLocalUser();
                 for (CoEvent event : MainActivity.getCommune().getCoEvents()) {
 
                     if(event.getType().equals(CoEventTypes.STOCK)){
@@ -51,7 +47,7 @@ public class StocksViewModel extends ViewModel {
                         //todo map object check for null object
                         Stock stock = new Gson().fromJson(event.getData(), Stock.class);
                         if(stock != null){
-                            stocksStringList.add("Name: " +stock.getName() +"|| Roommate"+ stock.getRommmateId()   +"|| Amount: " + stock.getTotalAmount() + "|| Cost: " +stock.getTotalCost());
+                            stocksStringList.add("Name: " +stock.getStockName() +"|| Roommate"+ stock.getUserName()   +"|| Amount: " + stock.getTotalAmount() + "|| Cost: " +stock.getTotalCost());
                         }
                     }
 

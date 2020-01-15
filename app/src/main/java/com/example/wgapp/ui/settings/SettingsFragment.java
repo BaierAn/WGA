@@ -55,7 +55,6 @@ public class SettingsFragment extends Fragment {
 
                         startActivity(EventLogIntent);
 
-                        //toDo
                         break;
                     case "Share Invitation Link":
                         Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
@@ -101,6 +100,19 @@ public class SettingsFragment extends Fragment {
                         FirebaseUIActivity.signOut(getContext());
                         Intent signOutintent = new Intent(getContext(), MainActivity.class);
                         startActivity(signOutintent);
+                        break;
+
+                    case "Delete Userdata":
+                        Commune com2 = MainActivity.getCommune();
+                        List<Roommate> li2 = com2.getRoommates();
+                        li2.remove(MainActivity.getLocalUser());
+                        com2.setRoommates(li2);
+                        MainActivity.setCommune(com2);
+                        MainActivity.getCommuneWriteRef().setValue(com2);
+                        MainActivity.setCommune(new Commune());
+                        MainActivity.getUserWriteRef().removeValue();
+                        Intent remOutintent = new Intent(getContext(), MainActivity.class);
+                        startActivity(remOutintent);
                         break;
                     default:
                         break;

@@ -89,7 +89,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".util.BarcodeCaptureActivity"
+        <activity android:name=".util.barcode.BarcodeCaptureActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.LAUNCH" />

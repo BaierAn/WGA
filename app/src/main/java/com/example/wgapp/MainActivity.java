@@ -192,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
                     // ...
                 }
             };
+
             CommuneReadRef.addValueEventListener(postListener);
         }
 
@@ -244,14 +245,50 @@ public class MainActivity extends AppCompatActivity {
                     Roommate mate = data.getValue(Roommate.class);
                     localUser = mate;
 
-                    if(localUser == null || localUser.getCommuneID() == "None"){
+                    if(localUser == null || localUser.getCommuneID().equals("None")){
                         Intent intent = new Intent(self, StartScreenActivity.class);
                         startActivity(intent);
                     }else{
+                        CommuneReadRef = FirebaseDatabase.getInstance().getReference().child("Commune/"+localUser.getCommuneID());
+                        CommuneWriteRef = FirebaseDatabase.getInstance().getReference().child("Commune/"+localUser.getCommuneID());
+                        mCheckInforComServer(CommuneReadRef);
                         initCommuneDataBase();
                     }
                 }
 
+                //DO SOME THING WHEN GET DATA SUCCESS HERE
+            }
+
+            @Override
+            public void onFailure(DatabaseError databaseError) {
+                //DO SOME THING WHEN GET DATA FAILED HERE
+            }
+        });
+
+    }
+
+    private void mCheckInforComServer(DatabaseReference ref) {
+        final Context self = this;
+        mReadDataOnce(ref, new OnGetDataListener() {
+            @Override
+            public void onStart() {
+                //DO SOME THING WHEN START GET DATA HERE
+                if (mProgressDialog == null) {
+                    mProgressDialog = new ProgressDialog( self);
+                    mProgressDialog.setMessage("Loading Commune Data");
+                    mProgressDialog.setIndeterminate(true);
+                }
+
+                mProgressDialog.show();
+            }
+
+            @Override
+            public void onSuccess(DataSnapshot data) {
+                if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                    mProgressDialog.dismiss();
+                    Commune com = data.getValue(Commune.class);
+                    commune = com;
+                }
                 //DO SOME THING WHEN GET DATA SUCCESS HERE
             }
 

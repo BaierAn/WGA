@@ -62,7 +62,14 @@ public class BudgetViewModel extends ViewModel {
 
             case STOCK:
                 budgetList.addAll(CalculateStock(new Gson().fromJson(event.getData(), Stock.class)));
-                return budgetList;
+                break;
+            case PAID:
+                Stock s = new Gson().fromJson(event.getData(), Stock.class);
+                //budgetList;
+                // wenn id gleich
+                // paid dazuschreiben
+                //todo durchsuche
+                break;
 
             case RESOURCE:
                 CalculateResources();
@@ -75,35 +82,31 @@ public class BudgetViewModel extends ViewModel {
     }
 
 
-//todo change to budget object
     private ArrayList<String> CalculateStock(Stock stock){
         ArrayList<String> budgetList = new ArrayList<>();
-
+        float fragment = 0;
         switch(stock.getStockType()){
             case SHARE:
-                float fragment  = stock.getTotalCost() / MainActivity.getCommune().getRoommates().size();
-                float costValue = 0 ;
-                //todo add firebaseuser
-                if(stock.getRommmateId().equals(MainActivity.getLocalUser().getId())){//FirebaseAuth.getInstance().getCurrentUser().getUid())){
-                    for (Roommate mate  : MainActivity.getCommune().getRoommates()) {
-                        if(stock.getRommmateId().equals(mate.getId())){//FirebaseAuth.getInstance().getCurrentUser().getUid())){
-
-                        }else{
-
-                            budgetList.add("get from " +mate.getDisplayName() + " : +" + fragment +"€");
-
-                        }
-                    }
-                }else{
-                    budgetList.add("owe to " + stock.getRommmateId() + " : -" + fragment +"€");
-
-                }
-                return budgetList;
-            case SINGLEUSE:
-                //todo implement singleuse
+                fragment  = stock.getTotalCost() / MainActivity.getCommune().getRoommates().size();
+                break;
+            case TOOKSINGLE:
+                fragment  = stock.getTotalCost() / stock.getTotalAmount();
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + stock.getStockType());
+        }
+
+        if(stock.getRommmateId().equals(MainActivity.getLocalUser().getId())){
+            for (Roommate mate  : MainActivity.getCommune().getRoommates()) {
+                if(stock.getRommmateId().equals(mate.getId())){
+                }else{
+
+                    budgetList.add("get from " +mate.getDisplayName() + " : +" + fragment +"€");
+                }
+            }
+        }else{
+            budgetList.add("owe to " + stock.getUserName() + " : -" + fragment +"€");
+
         }
         return budgetList;
     }

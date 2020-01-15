@@ -16,7 +16,7 @@ import com.example.wgapp.models.CoEvent;
 import com.example.wgapp.models.CoEventTypes;
 import com.example.wgapp.models.Stock;
 import com.example.wgapp.models.StockCreationTypes;
-import com.example.wgapp.util.BarcodeCaptureActivity;
+import com.example.wgapp.util.barcode.BarcodeCaptureActivity;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -78,7 +78,7 @@ public class StockCreationActivity extends AppCompatActivity {
                                 Gson gson = new Gson();
                                 Stock stock = gson.fromJson(event.getData(), Stock.class);
 
-                                InputName.setText(stock.getName());
+                                InputName.setText(stock.getStockName());
                                 TotalCostInput.setText(String.valueOf(stock.getTotalCost()));
                                 TotalAmountInput.setText(String.valueOf(stock.getTotalAmount()));
                                 Barcode.setText(event.getBarcode());
@@ -87,16 +87,10 @@ public class StockCreationActivity extends AppCompatActivity {
                             }
 
                         }
-
-
                     }
                     break;
-
             }
-
         }
-
-
     }
 
 
@@ -104,35 +98,55 @@ public class StockCreationActivity extends AppCompatActivity {
         Intent intent = new Intent(this, BarcodeCaptureActivity.class);
         intent.putExtra(BarcodeCaptureActivity.AutoFocus, true);
         intent.putExtra(BarcodeCaptureActivity.UseFlash, false);
-        startActivityForResult(intent, 9001);
+        startActivityForResult(intent, 9002);
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 9001) {
-            if (resultCode == CommonStatusCodes.SUCCESS) {
-                if (data != null) {
-                    com.google.android.gms.vision.barcode.Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
-                    Barcode.setText(barcode.displayValue);
-                }
+
+
+        Barcode barcode = new Barcode();
+
+        if (resultCode == CommonStatusCodes.SUCCESS) {
+            if (data != null) {
+                barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
             }
         }
-        else {
-            super.onActivityResult(requestCode, resultCode, data);
+
+
+        switch(requestCode){
+            case 9001:
+                Barcode.setText(barcode.displayValue);
+                break;
+
+            case 9002:
+                for (CoEvent event : MainActivity.getCommune().getCoEvents()) {
+                    if(event.getType() == CoEventTypes.STOCK){
+                        if(event.getBarcode().equals(barcode.displayValue)){
+                            Gson gson = new Gson();
+                            Stock stock = gson.fromJson(event.getData(), Stock.class);
+                            InputName.setText(stock.getStockName());
+                            TotalCostInput.setText(String.valueOf(stock.getTotalCost()));
+                            TotalAmountInput.setText(String.valueOf(stock.getTotalAmount()));
+                            Barcode.setText(event.getBarcode());
+                            DropdownType.setSelection(((ArrayAdapter) DropdownType.getAdapter()).getPosition(stock.getStockType()));
+                        }
+                    }
+                }
+                break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+                break;
         }
     }
     public void scanBarcode(View view){
-
-
+        Intent intent = new Intent(this, BarcodeCaptureActivity.class);
+        intent.putExtra(BarcodeCaptureActivity.AutoFocus, true);
+        intent.putExtra(BarcodeCaptureActivity.UseFlash, false);
+        startActivityForResult(intent, 9001);
     }
 
 
     public void createStock(View view){
-
-        int a = Integer.parseInt(TotalAmountInput.getText().toString());
-        float b = Float.parseFloat(TotalCostInput.getText().toString());
-        StockCreationTypes c = (StockCreationTypes)DropdownType.getSelectedItem();
-        String d = InputName.getText().toString();
-
 
         Stock stockData = new Stock(Integer.parseInt(TotalAmountInput.getText().toString()),
                                     Float.parseFloat(TotalCostInput.getText().toString()),
@@ -152,7 +166,7 @@ public class StockCreationActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-        //todo add event to commune
+
 
     }
 

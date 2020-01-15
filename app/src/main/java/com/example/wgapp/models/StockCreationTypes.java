@@ -1,5 +1,5 @@
 package com.example.wgapp.models;
 
 public enum StockCreationTypes {
-    SHARE, SINGLEUSE
+    SHARE, SINGLEUSE, TOOKSINGLE
 }

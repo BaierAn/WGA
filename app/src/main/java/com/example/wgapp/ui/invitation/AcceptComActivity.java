@@ -20,22 +20,16 @@ public class AcceptComActivity extends AppCompatActivity
         protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accept_join);
-
-
-        //db get commune
-
     }
 
 
     public void acceptInvitation(View view){
-        //db get commune , add user
 
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
     public void declineInvitation(View view){
-        //todo zur main view
 
         Intent intent = new Intent(this, StartScreenActivity.class);
         startActivity(intent);

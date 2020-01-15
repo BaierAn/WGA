@@ -36,6 +36,7 @@ public class SettingsViewModel extends ViewModel {
                 SettingsStringList.add("User Data");
                 SettingsStringList.add("Leave WG");
                 SettingsStringList.add("Logout");
+                SettingsStringList.add("Delete Userdata");
                 settingsList.setValue(SettingsStringList);
             }
         }, 1);
