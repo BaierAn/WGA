@@ -1,9 +1,8 @@
 package com.example.wgapp.ui.stocks;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -17,21 +16,22 @@ import com.example.wgapp.models.CoEvent;
 import com.example.wgapp.models.CoEventTypes;
 import com.example.wgapp.models.Stock;
 import com.example.wgapp.models.StockCreationTypes;
-import com.example.wgapp.ui.signIn.FirebaseUIActivity;
-import com.example.wgapp.util.BarcodeScanningActivity;
+import com.example.wgapp.util.BarcodeCaptureActivity;
+import com.google.android.gms.common.api.CommonStatusCodes;
+import com.google.android.gms.vision.CameraSource;
+import com.google.android.gms.vision.barcode.Barcode;
 import com.google.gson.Gson;
-import com.google.gson.JsonDeserializer;
 
 public class StockCreationActivity extends AppCompatActivity {
 
-
+    CameraSource mCameraSource;
      Spinner DropdownType;
      EditText InputName ;
-
+    SurfaceView camerapreview;
      EditText TotalCostInput;
 
      EditText TotalAmountInput;
-
+    CameraSource cameraSource;
     EditText Barcode;
 
     @Override
@@ -94,23 +94,37 @@ public class StockCreationActivity extends AppCompatActivity {
 
             }
 
+        }
 
+
+    }
+
+
+    public void getLastInput(View view){
+        Intent intent = new Intent(this, BarcodeCaptureActivity.class);
+        intent.putExtra(BarcodeCaptureActivity.AutoFocus, true);
+        intent.putExtra(BarcodeCaptureActivity.UseFlash, false);
+        startActivityForResult(intent, 9001);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 9001) {
+            if (resultCode == CommonStatusCodes.SUCCESS) {
+                if (data != null) {
+                    com.google.android.gms.vision.barcode.Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
+                    Barcode.setText(barcode.displayValue);
+                }
+            }
+        }
+        else {
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
+    public void scanBarcode(View view){
 
 
-    public void getLastInput(){
-        Intent intent = new Intent(this, BarcodeScanningActivity.class);
-        intent.putExtra("type", "StockGetLastInput");
-        startActivity(intent);
     }
 
-    public void scanBarcode(){
-        Intent intent = new Intent(this, BarcodeScanningActivity.class);
-        intent.putExtra("type", "StockScanBarcode");
-        startActivity(intent);
-
-    }
 
     public void createStock(View view){
 
