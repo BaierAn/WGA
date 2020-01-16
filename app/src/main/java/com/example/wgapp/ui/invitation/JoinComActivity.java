@@ -29,7 +29,13 @@ public class JoinComActivity extends AppCompatActivity {
 
         InputName = (EditText) findViewById(R.id.WGIdInput);
 
-        //todo wg link reinschallern
+        Bundle extras = getIntent().getExtras();
+        String userName;
+
+        if (extras != null) {
+            InputName.setText(extras.getString("link"));
+        }
+
     }
 
     public void joinWG(View view){

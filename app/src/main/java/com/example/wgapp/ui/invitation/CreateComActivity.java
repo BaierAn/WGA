@@ -36,8 +36,8 @@ public class CreateComActivity extends AppCompatActivity {
         Commune commune = new Commune();
 
         Roommate usr = MainActivity.getLocalUser();
-        commune.setCommuneLink(createLink());
         commune.setCommuneId(UUID.randomUUID().toString());
+        commune.setCommuneLink(createLink(commune.getCommuneId()));
         usr.setCommuneID(commune.getCommuneId());
         MainActivity.setLocalUser(usr);
         MainActivity.getUserWriteRef().setValue(usr);
@@ -53,9 +53,13 @@ public class CreateComActivity extends AppCompatActivity {
     }
 
 
-    public String createLink(){
+    public String createLink(String id){
+
+        String appCode = "<app_code>";
+        String packageName = getApplicationContext().getPackageName();
+
         DynamicLink dynamicLink = FirebaseDynamicLinks.getInstance().createDynamicLink()
-                .setLink(Uri.parse("https://www.example.com/"))
+                .setLink(Uri.parse("https://www.example.com/"+id))
                 .setDomainUriPrefix("https://wgapp.page.link")
                 // Open links with this app on Android
                 .setAndroidParameters(new DynamicLink.AndroidParameters.Builder().build())

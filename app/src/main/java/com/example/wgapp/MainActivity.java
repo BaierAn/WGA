@@ -2,6 +2,7 @@ package com.example.wgapp;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.example.wgapp.models.CoEvent;
@@ -10,15 +11,18 @@ import com.example.wgapp.models.Commune;
 import com.example.wgapp.models.Roommate;
 import com.example.wgapp.models.Stock;
 import com.example.wgapp.models.StockCreationTypes;
+import com.example.wgapp.ui.invitation.JoinComActivity;
 import com.example.wgapp.ui.signIn.FirebaseUIActivity;
 import com.example.wgapp.ui.start.StartScreenActivity;
 import com.example.wgapp.ui.stocks.StockCreationActivity;
 import com.example.wgapp.util.Database;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -37,6 +41,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 import com.google.gson.Gson;
 
 import android.content.Intent;
@@ -246,8 +252,13 @@ public class MainActivity extends AppCompatActivity {
                     localUser = mate;
 
                     if(localUser == null || localUser.getCommuneID().equals("None")){
-                        Intent intent = new Intent(self, StartScreenActivity.class);
-                        startActivity(intent);
+
+
+
+                        searchDynamicLink();
+
+
+
                     }else{
                         CommuneReadRef = FirebaseDatabase.getInstance().getReference().child("Commune/"+localUser.getCommuneID());
                         CommuneWriteRef = FirebaseDatabase.getInstance().getReference().child("Commune/"+localUser.getCommuneID());
@@ -266,6 +277,46 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+
+    private void searchDynamicLink(){
+        FirebaseDynamicLinks.getInstance()
+                .getDynamicLink(getIntent())
+                .addOnSuccessListener(this, new OnSuccessListener<PendingDynamicLinkData>() {
+                    @Override
+                    public void onSuccess(PendingDynamicLinkData pendingDynamicLinkData) {
+                        // Get deep link from result (may be null if no link is found)
+                        Uri deepLink = null;
+                        if (pendingDynamicLinkData != null) {
+                            deepLink = pendingDynamicLinkData.getLink();
+                            String id = deepLink.getPath();
+                            Intent intent = new Intent(getApplicationContext(), JoinComActivity.class);
+                            intent.putExtra("link" , id);
+                            startActivity(intent);
+                        }else{
+                            Intent intent = new Intent(getApplicationContext(), StartScreenActivity.class);
+                            startActivity(intent);
+
+                        }
+
+                        //todo
+                        // Handle the deep link. For example, open the linked
+                        // content, or apply promotional credit to the user's
+                        // account.
+                        // ...
+
+                        // ...
+                    }
+                })
+                .addOnFailureListener(this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Intent intent = new Intent(getApplicationContext(), StartScreenActivity.class);
+                        startActivity(intent);
+                    }
+                });
+    }
+
 
     private void mCheckInforComServer(DatabaseReference ref) {
         final Context self = this;
