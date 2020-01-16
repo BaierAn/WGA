@@ -22,6 +22,7 @@ import com.example.wgapp.models.CoEventTypes;
 import com.example.wgapp.models.Commune;
 import com.example.wgapp.models.Roommate;
 import com.example.wgapp.models.Stock;
+import com.example.wgapp.models.StockCreationTypes;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 
@@ -38,6 +39,8 @@ public class BudgetViewModel extends ViewModel {
     }
 
 
+
+
     private void loadBudget() {
         // do async operation to fetch users
 
@@ -46,9 +49,7 @@ public class BudgetViewModel extends ViewModel {
             @Override
             public void run() {
                 ArrayList<Pair<String,String>> budgetStringList = new ArrayList<Pair<String,String>>();
-                for (CoEvent event : MainActivity.getCommune().getCoEvents()) {
-                    budgetStringList.addAll(CalculateBudget( event));
-                }
+                    budgetStringList.addAll(CalculateBudget());
                 budgetList.setValue(budgetStringList);
             }
         }, 5);
@@ -56,28 +57,31 @@ public class BudgetViewModel extends ViewModel {
     }
 
 
-    private  ArrayList<Pair<String,String>> CalculateBudget(CoEvent event){
+    private  ArrayList<Pair<String,String>> CalculateBudget(){
         ArrayList<Pair<String,String>> budgetList = new ArrayList<>();
-        switch(event.getType()){
+        for (CoEvent event : MainActivity.getCommune().getCoEvents()) {
+            switch(event.getType()){
+                case STOCK:
+                    budgetList.addAll(CalculateStock(new Gson().fromJson(event.getData(), Stock.class),event.getData() ));
+                    break;
+                case PAID:
+                    for (Pair<String, String> rawStock : budgetList) {
+                        if(event.getData().equals(rawStock.second)){
+                            //todo alter ui
+                            budgetList.add(new Pair<String, String>(rawStock.first + " || PAID", rawStock.second));
+                            budgetList.remove(rawStock);
+                            break;
+                        }
+                        }
+                    break;
 
-            case STOCK:
-                budgetList.addAll(CalculateStock(new Gson().fromJson(event.getData(), Stock.class),event.getData() ));
-                break;
-            case PAID:
-                for (Pair<String, String> rawStock : budgetList
-                     ) {
-                    if(event.getData().equals(rawStock.second)){
-                        //todo alter ui
-                    }
-                }
-                break;
+                case RESOURCE:
+                    CalculateResources();
+                    break;
 
-            case RESOURCE:
-                CalculateResources();
-                break;
-
-            default:
-                throw new IllegalStateException("Unexpected value: " + event.getType());
+                default:
+                    throw new IllegalStateException("Unexpected value: " + event.getType());
+            }
         }
         return budgetList;
     }
@@ -94,20 +98,26 @@ public class BudgetViewModel extends ViewModel {
                 fragment  = stock.getTotalCost() / stock.getTotalAmount();
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + stock.getStockType());
+                break;
         }
-
+        //todo fix logical error you dont get money from others by single use maybe pay yourself ?
+        //if i created the stock
         if(stock.getRommmateId().equals(MainActivity.getLocalUser().getId())){
-            for (Roommate mate  : MainActivity.getCommune().getRoommates()) {
-                if(stock.getRommmateId().equals(mate.getId())){
-                }else{
 
-                    budgetList.add(new Pair<String, String>("get from " +mate.getDisplayName() + " : +" + fragment +"€", stockRaw));
+            for (Roommate mate  : MainActivity.getCommune().getRoommates()) {
+                if(stock.getStockType() == StockCreationTypes.SHARE){
+                    if(!stock.getRommmateId().equals(mate.getId())){
+                        budgetList.add(new Pair<String, String>("get from " +mate.getDisplayName() + " : +" + fragment +"€", stockRaw));
+                    }
+                }else {
+                    if(stock.getRommmateId().equals(mate.getId())){
+                        budgetList.add(new Pair<String, String>("get from " +mate.getDisplayName() + " : +" + fragment +"€", stockRaw));
+                    }
                 }
             }
         }else{
+            //if someone else created the stock
             budgetList.add(new Pair<String, String>("owe to " + stock.getUserName() + " : -" + fragment +"€", stockRaw));
-
         }
         return budgetList;
     }

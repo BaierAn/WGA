@@ -1,9 +1,8 @@
-package com.example.wgapp.ui.settings;
+package com.example.wgapp.ui.resources;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,12 +14,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.wgapp.MainActivity;
 import com.example.wgapp.R;
 import com.example.wgapp.models.CoEvent;
-import com.example.wgapp.ui.start.StartScreenActivity;
+import com.example.wgapp.ui.settings.PlainTextActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventLogActivity extends AppCompatActivity
+public class ResourceLockActivity extends AppCompatActivity
 
 {
 

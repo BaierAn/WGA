@@ -27,6 +27,10 @@ public class Stock implements Serializable {
             this.ID = UUID.randomUUID().toString();
         }
 
+    public String getID() {
+        return ID;
+    }
+
     public void setID(String ID) {
         this.ID = ID;
     }

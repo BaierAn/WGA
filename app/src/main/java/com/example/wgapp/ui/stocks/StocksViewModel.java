@@ -43,10 +43,34 @@ public class StocksViewModel extends ViewModel {
                 Roommate a =  MainActivity.getLocalUser();
                 for (CoEvent event : MainActivity.getCommune().getCoEvents()) {
 
+
                     if(event.getType().equals(CoEventTypes.STOCK)){
                         Stock stock = new Gson().fromJson(event.getData(), Stock.class);
                         if(stock != null){
-                            stocksStringList.add(new Pair<String, String>("Name: " +stock.getStockName() +"|| Roommate"+ stock.getUserName()   +"|| Amount: " + stock.getTotalAmount() + "|| Cost: " +stock.getTotalCost(),event.getData()));
+                        switch(stock.getStockType()) {
+                            case SHARE:
+                                stocksStringList.add(new Pair<String, String>("Name: " +stock.getStockName() +"|| Roommate"+ stock.getUserName()   +"|| Amount: " + stock.getTotalAmount() + "|| Cost: " +stock.getTotalCost(),event.getData()));
+                                break;
+                            case SINGLEUSE:
+                                CoEvent tempEvent = event;
+                                Stock tempStock = stock;
+
+                                for (CoEvent event2 : MainActivity.getCommune().getCoEvents()) {
+                                    Stock stock2 = new Gson().fromJson(event2.getData(), Stock.class);
+                                    if(stock.getID().equals(stock2.getID())){
+                                        if(event2.getDateTime().compareTo(event.getDateTime()) > 0){
+                                            tempEvent = event2;
+                                            tempStock = stock2;
+                                        }
+                                    }
+                                }
+                                stocksStringList.add(new Pair<String, String>("Name: " +tempStock.getStockName() +"|| Roommate"+ tempStock.getUserName()   +"|| Left: " + tempStock.getLeftAmount() + "|| Cost: " +tempStock.getTotalCost(),tempEvent.getData()));
+                                break;
+                            case TOOKSINGLE:
+                                break;
+                            default:
+                                break;
+                        }
                         }
                     }
                 }

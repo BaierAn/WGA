@@ -87,8 +87,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
         // [START check_current_user]
 
-        //Todo check for invitation LINK
-
 
 
 
@@ -298,14 +296,6 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(intent);
 
                         }
-
-                        //todo
-                        // Handle the deep link. For example, open the linked
-                        // content, or apply promotional credit to the user's
-                        // account.
-                        // ...
-
-                        // ...
                     }
                 })
                 .addOnFailureListener(this, new OnFailureListener() {

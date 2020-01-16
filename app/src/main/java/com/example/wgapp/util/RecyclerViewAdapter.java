@@ -13,6 +13,7 @@ import com.example.wgapp.MainActivity;
 import com.example.wgapp.R;
 import com.example.wgapp.models.CoEvent;
 import com.example.wgapp.models.CoEventTypes;
+import com.example.wgapp.models.Commune;
 import com.example.wgapp.models.Stock;
 import com.example.wgapp.models.StockCreationTypes;
 import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
@@ -60,21 +61,26 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void createTookSingleEvent(int position){
 
         Stock stock = new Gson().fromJson(data.get(position).second, Stock.class );
-        Stock newStock = new Stock(stock.getTotalAmount(),
-                stock.getLeftAmount() - 1 ,
-                stock.getTotalCost(),
-                StockCreationTypes.TOOKSINGLE,
-                stock.getStockName());
 
-        CoEvent stockCoEvent = new CoEvent(CoEventTypes.STOCK, new Gson().toJson(newStock));
+        if(stock.getStockType() == StockCreationTypes.SINGLEUSE || stock.getStockType() == StockCreationTypes.TOOKSINGLE){
+            Stock newStock = new Stock(stock.getTotalAmount(),
+                    stock.getLeftAmount() - 1 ,
+                    stock.getTotalCost(),
+                    StockCreationTypes.TOOKSINGLE,
+                    stock.getStockName());
+            newStock.setID(stock.getID());
 
-        MainActivity.getCommune().addCoEvent(stockCoEvent);
-        MainActivity.getCommuneWriteRef().setValue(MainActivity.getCommune());
+            CoEvent stockCoEvent = new CoEvent(CoEventTypes.STOCK, new Gson().toJson(newStock));
+
+            MainActivity.getCommune().addCoEvent(stockCoEvent);
+            MainActivity.getCommuneWriteRef().setValue(MainActivity.getCommune());
+        }
     }
 
 
     public void createPaidEvent(int position){
         CoEvent stockCoEvent = new CoEvent(CoEventTypes.PAID, data.get(position).second);
+
         MainActivity.getCommune().addCoEvent(stockCoEvent);
         MainActivity.getCommuneWriteRef().setValue(MainActivity.getCommune());
 
