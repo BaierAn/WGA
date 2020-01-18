@@ -41,20 +41,14 @@ public class BudgetViewModel extends ViewModel {
 
 
 
-    private void loadBudget() {
+    public void loadBudget() {
         // do async operation to fetch users
-
-        Handler myHandler = new Handler();
-        myHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
                 ArrayList<Pair<String,String>> budgetStringList = new ArrayList<Pair<String,String>>();
                     budgetStringList.addAll(CalculateBudget());
                 budgetList.setValue(budgetStringList);
-            }
-        }, 5);
+        }
 
-    }
+
 
 
     private  ArrayList<Pair<String,String>> CalculateBudget(){
@@ -68,7 +62,7 @@ public class BudgetViewModel extends ViewModel {
                     for (Pair<String, String> rawStock : budgetList) {
                         if(event.getData().equals(rawStock.second)){
                             //todo alter ui
-                            budgetList.add(new Pair<String, String>(rawStock.first + " || PAID", rawStock.second));
+                            budgetList.add(new Pair<String, String>(rawStock.first , rawStock.second));
                             budgetList.remove(rawStock);
                             break;
                         }
@@ -107,7 +101,7 @@ public class BudgetViewModel extends ViewModel {
             for (Roommate mate  : MainActivity.getCommune().getRoommates()) {
                 if(stock.getStockType() == StockCreationTypes.SHARE){
                     if(!stock.getRommmateId().equals(mate.getId())){
-                        budgetList.add(new Pair<String, String>("Erhalte von " +mate.getDisplayName() + " " + fragment +"€", stockRaw));
+                        budgetList.add(new Pair<String, String>("Erhalte von " +mate.getDisplayName() + " " + fragment +"€\nStock: "+stock.getStockName(), stockRaw));
                     }
                 }else {
                     if(stock.getRommmateId().equals(mate.getId())){

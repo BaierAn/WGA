@@ -1,5 +1,6 @@
 package com.example.wgapp.util;
 
+import android.graphics.Paint;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,11 +30,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         private TextView mTitle;
         RelativeLayout relativeLayout;
+        private boolean isSwipable;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
             mTitle = itemView.findViewById(R.id.txtTitle);
+            isSwipable = true;
+        }
+
+        public boolean isSwipable() {
+            return isSwipable;
+        }
+
+        public void setSwipable(boolean swipable) {
+            isSwipable = swipable;
         }
     }
 
@@ -44,13 +55,46 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_row, parent, false);
+
+
+
+
         return new MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+
         holder.mTitle.setText(data.get(position).first);
+
+        Stock stock = new Gson().fromJson(data.get(position).second, Stock.class);
+        if(stock != null){
+                if(stock.getStockType() == StockCreationTypes.SHARE){
+                    holder.setSwipable(false);
+                    return;
+                }
+                if(stock.getStockType() == StockCreationTypes.SINGLEUSE){
+                    return;
+                }
+
+
+
+            for (CoEvent ev : MainActivity.getCommune().getCoEvents()) {
+                if( ev.getType() == CoEventTypes.PAID){
+                    Stock comStock = new Gson().fromJson(ev.getData(), Stock.class);
+                    if(ev.getData().equals(data.get(position).second)){
+                        holder.setSwipable(false);
+                        holder.mTitle.setPaintFlags(holder.mTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                        return;
+                    }
+                }
+            }
+            }
+
     }
+
+
+
 
     @Override
     public int getItemCount() {
@@ -74,6 +118,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             MainActivity.getCommune().addCoEvent(stockCoEvent);
             MainActivity.getCommuneWriteRef().setValue(MainActivity.getCommune());
+
+            notifyDataSetChanged();
+
         }
     }
 
@@ -83,6 +130,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         MainActivity.getCommune().addCoEvent(stockCoEvent);
         MainActivity.getCommuneWriteRef().setValue(MainActivity.getCommune());
+
+        notifyDataSetChanged();
 
     }
 
@@ -101,7 +150,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         notifyItemInserted(position);
     }
 
+
+
     public ArrayList<Pair<String, String>> getData() {
         return data;
     }
 }
+

@@ -90,13 +90,14 @@ public class SettingsFragment extends Fragment {
                         MainActivity.getCommuneWriteRef().setValue(com);
 
                         MainActivity.setCommune(new Commune());
-
+                        getActivity().finish();
                         Intent intent = new Intent(getContext(), MainActivity.class);
                         startActivity(intent);
                         break;
                     case "Abmelden":
                         FirebaseUIActivity.signOut(getContext());
-                        Intent signOutintent = new Intent(getContext(), FirebaseUIActivity.class);
+                        getActivity().finish();
+                        Intent signOutintent = new Intent(getContext(), MainActivity.class);
                         startActivity(signOutintent);
                         break;
 
@@ -110,6 +111,9 @@ public class SettingsFragment extends Fragment {
                         MainActivity.setCommune(new Commune());
                         MainActivity.getUserWriteRef().removeValue();
                         MainActivity.setLocalUser(null);
+
+                        getActivity().finish();
+
                         Intent remOutintent = new Intent(getContext(), FirebaseUIActivity.class);
                         FirebaseUIActivity.signOut(getContext());
                         startActivity(remOutintent);

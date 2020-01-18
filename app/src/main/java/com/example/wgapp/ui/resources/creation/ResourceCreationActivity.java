@@ -2,6 +2,7 @@ package com.example.wgapp.ui.resources.creation;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -33,7 +34,7 @@ public class ResourceCreationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setContentView(R.layout.activity_res_creation);
 
@@ -53,6 +54,10 @@ public class ResourceCreationActivity extends AppCompatActivity {
         startActivity(intent);
 
 
+    }
+    public boolean onOptionsItemSelected(MenuItem item){
+        finish();
+        return true;
     }
 
 }

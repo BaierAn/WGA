@@ -23,10 +23,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wgapp.MainActivity;
 import com.example.wgapp.R;
+import com.example.wgapp.models.Stock;
+import com.example.wgapp.models.StockCreationTypes;
 import com.example.wgapp.ui.budget.BudgetViewModel;
 import com.example.wgapp.util.RecyclerViewAdapter;
 import com.example.wgapp.util.SwipeToDeleteCallback;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,8 +88,12 @@ public class StocksFragment extends Fragment {
                 final int position = viewHolder.getAdapterPosition();
                 final Pair<String,String> item = mAdapter.getData().get(position);
 
-                mAdapter.createTookSingleEvent(position);
 
+
+                mAdapter.createTookSingleEvent(position);
+                stocksViewModel.loadStocks();
+
+                //mAdapter.notifyDataSetChanged();
 
                 Snackbar snackbar = Snackbar
                         .make(coordinatorLayout, "Item was removed from the list.", Snackbar.LENGTH_LONG);
@@ -96,6 +103,7 @@ public class StocksFragment extends Fragment {
 
                         mAdapter.restoreItem(item, position);
                         stockRecView.scrollToPosition(position);
+                        mAdapter.notifyDataSetChanged();
                     }
                 });
 

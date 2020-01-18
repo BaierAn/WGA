@@ -293,6 +293,7 @@ public class MainActivity extends AppCompatActivity {
                             intent.putExtra("link" , id);
                             startActivity(intent);
                         }else{
+                            finish();
                             Intent intent = new Intent(getApplicationContext(), StartScreenActivity.class);
                             startActivity(intent);
 
@@ -302,6 +303,7 @@ public class MainActivity extends AppCompatActivity {
                 .addOnFailureListener(this, new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        finish();
                         Intent intent = new Intent(getApplicationContext(), StartScreenActivity.class);
                         startActivity(intent);
                     }
@@ -309,7 +311,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void mCheckInforComServer(DatabaseReference ref) {
+    public void mCheckInforComServer(DatabaseReference ref) {
         final Context self = this;
         mReadDataOnce(ref, new OnGetDataListener() {
             @Override

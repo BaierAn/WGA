@@ -3,6 +3,7 @@ package com.example.wgapp.ui.invitation;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
@@ -30,6 +31,7 @@ public class CreateComActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_com);
         InputName = (EditText) findViewById(R.id.WGNameInput);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public void createCommune(View view){
@@ -48,6 +50,7 @@ public class CreateComActivity extends AppCompatActivity {
         MainActivity.initCommuneDataBase();
         MainActivity.getCommuneWriteRef().setValue(commune);
         MainActivity.setCommune(commune);
+        finish();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
@@ -67,5 +70,9 @@ public class CreateComActivity extends AppCompatActivity {
                 .buildDynamicLink();
 
         return dynamicLink.getUri().toString();
+    }
+    public boolean onOptionsItemSelected(MenuItem item){
+        finish();
+        return true;
     }
 }

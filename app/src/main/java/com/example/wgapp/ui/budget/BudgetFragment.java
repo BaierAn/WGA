@@ -78,6 +78,7 @@ public class BudgetFragment extends Fragment {
         });
 */        getActivity().setTitle(MainActivity.getCommune().getCommuneName());
 
+        budgetViewModel.loadBudget();
         return root;
     }
 
@@ -93,7 +94,7 @@ public class BudgetFragment extends Fragment {
                 final Pair<String,String> item = mAdapter.getData().get(position);
 
                 mAdapter.createPaidEvent(position);
-
+                budgetViewModel.loadBudget();
 
 
                 Snackbar snackbar = Snackbar

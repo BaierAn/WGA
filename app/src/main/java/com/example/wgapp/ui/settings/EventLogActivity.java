@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Pair;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.wgapp.MainActivity;
 import com.example.wgapp.R;
 import com.example.wgapp.models.CoEvent;
+import com.example.wgapp.models.MyPair;
 import com.example.wgapp.ui.start.StartScreenActivity;
 
 import java.util.ArrayList;
@@ -32,35 +35,32 @@ public class EventLogActivity extends AppCompatActivity
         setContentView(R.layout.acticity_event_log);
         final ListView EventLogListView = findViewById(R.id.log_list);
 
-        List<String> makitstop = new ArrayList<String>();
+        List<MyPair<String, String>> makitstop = new ArrayList<MyPair<String, String>>();
 
         for( CoEvent k: MainActivity.getCommune().getCoEvents() )
         {
-            makitstop.add(k.getType() +" || " +k.getDateTime().toString());
+            makitstop.add(new MyPair<String, String>(k.getType() +" || " +k.getDateTime().toString() , k.getData()));
         }
 
-        android.widget.ListAdapter adapter = new ArrayAdapter<String>( this,
+        android.widget.ListAdapter adapter = new ArrayAdapter<MyPair<String, String>>( this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, makitstop);
         // Assign adapter to ListView
         EventLogListView.setAdapter(adapter);
 
         final Context self = this;
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         EventLogListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
 
-                String item = ((TextView) view).getText().toString();
+                MyPair<String, String> k = (MyPair<String, String>) parent.getItemAtPosition(position);
 
-                for( CoEvent k: MainActivity.getCommune().getCoEvents() )
-                {
-                    if(k.getDateTime().toString().equals(item)){
-                        Intent usrDatIntent = new Intent(self, PlainTextActivity.class);
-                        usrDatIntent.putExtra("data", k.getData());
-                        startActivity(usrDatIntent);
-                    }
-                }
+                Intent usrDatIntent = new Intent(self, PlainTextActivity.class);
+                usrDatIntent.putExtra("data", k.second);
+                startActivity(usrDatIntent);
+
 
             }
 
@@ -70,6 +70,9 @@ public class EventLogActivity extends AppCompatActivity
 
 
 }
-
+    public boolean onOptionsItemSelected(MenuItem item){
+        finish();
+        return true;
+    }
 
 }

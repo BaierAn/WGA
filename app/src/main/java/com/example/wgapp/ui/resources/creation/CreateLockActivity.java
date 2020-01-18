@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.net.ParseException;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -38,7 +39,7 @@ public class CreateLockActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_lock_creation);
 
         InputDesc = (EditText) findViewById(R.id.LockInputDesc);
@@ -84,6 +85,12 @@ public class CreateLockActivity extends AppCompatActivity {
 
 
     }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        finish();
+        return true;
+    }
+
 
     public  java.util.Date getDateFromString(String datePicker){
 

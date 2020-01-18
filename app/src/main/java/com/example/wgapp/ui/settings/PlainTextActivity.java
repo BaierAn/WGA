@@ -2,6 +2,7 @@ package com.example.wgapp.ui.settings;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,6 +33,11 @@ public class PlainTextActivity extends AppCompatActivity {
             // and get whatever type user account id is
 
         }
-    }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+    }
+    public boolean onOptionsItemSelected(MenuItem item){
+        finish();
+        return true;
+    }
 }

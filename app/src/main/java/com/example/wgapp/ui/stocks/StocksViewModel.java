@@ -31,12 +31,9 @@ public class StocksViewModel extends ViewModel {
         }
         return stocksList;
     }
-    private void loadStocks() {
+    public void loadStocks() {
         // do async operation to fetch users
-        Handler myHandler = new Handler();
-        myHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
+
                 ArrayList<Pair<String,String>> stocksStringList = new ArrayList<Pair<String,String>>();
 
                 Commune c =  MainActivity.getCommune();
@@ -49,7 +46,7 @@ public class StocksViewModel extends ViewModel {
                         if(stock != null){
                         switch(stock.getStockType()) {
                             case SHARE:
-                                stocksStringList.add(new Pair<String, String>("Name: " +stock.getStockName() +"\nErsteller: "+ stock.getUserName()   +"\nAnzahl: " + stock.getTotalAmount() + "\nKosten: " +stock.getTotalCost(),event.getData()));
+                                stocksStringList.add(new Pair<String, String>("Name: " +stock.getStockName() +"\nErsteller: "+ stock.getUserName()   +"\nAnzahl: " + stock.getTotalAmount() + "\nKosten: " +stock.getTotalCost()+ "\nTyp: " +stock.getStockType() ,event.getData()));
                                 break;
                             case SINGLEUSE:
                                 CoEvent tempEvent = event;
@@ -60,11 +57,12 @@ public class StocksViewModel extends ViewModel {
                                     if(stock2 != null && stock.getID().equals(stock2.getID())){
                                         if(event2.getDateTime().compareTo(event.getDateTime()) > 0){
                                             tempEvent = event2;
+                                            stock2.setStockType(stock.getStockType());
                                             tempStock = stock2;
                                         }
                                     }
                                 }
-                                stocksStringList.add(new Pair<String, String>("Name: " +tempStock.getStockName() +"|| Roommate"+ tempStock.getUserName()   +"|| Left: " + tempStock.getLeftAmount() + "|| Cost: " +tempStock.getTotalCost(),tempEvent.getData()));
+                                stocksStringList.add(new Pair<String, String>("Name: " +tempStock.getStockName() +"\nErsteller: "+ tempStock.getUserName()   +"\nAnzahl: " + tempStock.getLeftAmount() + "\nKosten: " +tempStock.getTotalCost()+ "\nTyp: " +tempStock.getStockType(),tempEvent.getData()));
                                 break;
                             case TOOKSINGLE:
                                 break;
@@ -75,8 +73,7 @@ public class StocksViewModel extends ViewModel {
                     }
                 }
                 stocksList.setValue(stocksStringList);
-            }
-        }, 5);
+
     }
     public StocksViewModel() {
     }

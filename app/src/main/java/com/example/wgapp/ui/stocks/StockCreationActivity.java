@@ -2,6 +2,7 @@ package com.example.wgapp.ui.stocks;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -59,6 +60,7 @@ public class StockCreationActivity extends AppCompatActivity {
 
         Barcode = findViewById(R.id.StockCreationBarcodeInput);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         Bundle extras = getIntent().getExtras();
@@ -92,6 +94,12 @@ public class StockCreationActivity extends AppCompatActivity {
                     break;
             }
         }
+    }
+
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        finish();
+        return true;
     }
 
 

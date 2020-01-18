@@ -76,7 +76,7 @@ public class FirebaseUIActivity extends AppCompatActivity {
                 MainActivity.initUserDataBase();
                 MainActivity.getUserWriteRef().setValue(rm);
 
-                Intent intent = new Intent(this, StartScreenActivity.class);
+                Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 // ...
             } else {

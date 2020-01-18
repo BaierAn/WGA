@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -56,6 +57,8 @@ public class ResourceActivity extends AppCompatActivity {
         lockListView = findViewById(R.id.lock_list_view);
         lockListView.setAdapter(new ArrayAdapter<String>(getBaseContext(),
                 android.R.layout.simple_list_item_1, android.R.id.text1, lockList));
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public void createLock(View view) {
@@ -63,5 +66,10 @@ public class ResourceActivity extends AppCompatActivity {
         Intent intent = new Intent(this, CreateLockActivity.class);
         intent.putExtra("data", resIntent.getStringExtra("data"));
         startActivity(intent);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        finish();
+        return true;
     }
 }

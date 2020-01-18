@@ -54,6 +54,7 @@ public class StartScreenActivity extends AppCompatActivity {
 
         FirebaseUIActivity.signOut(this);
         MainActivity.setLocalUser(null);
+        finish();
         Intent intent = new Intent(this, FirebaseUIActivity.class);
         startActivity(intent);
     }
