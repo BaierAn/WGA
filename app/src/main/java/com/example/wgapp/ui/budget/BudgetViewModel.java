@@ -62,7 +62,7 @@ public class BudgetViewModel extends ViewModel {
                     for (Pair<String, String> rawStock : budgetList) {
                         if(event.getData().equals(rawStock.second)){
                             //todo alter ui
-                            budgetList.add(new Pair<String, String>(rawStock.first , rawStock.second));
+                            budgetList.add(new Pair<String, String>(rawStock.first + " ✓" , rawStock.second));
                             budgetList.remove(rawStock);
                             break;
                         }
@@ -81,40 +81,49 @@ public class BudgetViewModel extends ViewModel {
     }
 
 
-    private ArrayList<Pair<String,String>> CalculateStock(Stock stock, String stockRaw){
-        ArrayList<Pair<String,String>> budgetList = new ArrayList<>();
+    private ArrayList<Pair<String,String>> CalculateStock(Stock stock, String stockRaw) {
+        ArrayList<Pair<String, String>> budgetList = new ArrayList<>();
         float fragment = 0;
-        switch(stock.getStockType()){
+        switch (stock.getStockType()) {
             case SHARE:
-                fragment  = stock.getTotalCost() / MainActivity.getCommune().getRoommates().size();
+                fragment = stock.getTotalCost() / MainActivity.getCommune().getRoommates().size();
+                for (Roommate mate : MainActivity.getCommune().getRoommates()) {
+
+                    if(!mate.getId().equals(MainActivity.getLocalUser().getId())){
+                        budgetList.add(createView(stock, mate, fragment , stockRaw));
+                    }
+                }
                 break;
             case TOOKSINGLE:
-                fragment  = stock.getTotalCost() / stock.getTotalAmount();
+                fragment = stock.getTotalCost() / stock.getTotalAmount();
+                if(!MainActivity.getLocalUser().getId().equals(stock.getRommmateId())){
+                    budgetList.add(new Pair<String, String>("Zahle an" + stock.getUserName() + " " + fragment +"€\nStock: "+stock.getStockName(), stockRaw));
+                }
+
                 break;
             default:
                 break;
         }
         //todo fix logical error you dont get money from others by single use maybe pay yourself ?
         //if i created the stock
-        if(stock.getRommmateId().equals(MainActivity.getLocalUser().getId())){
 
-            for (Roommate mate  : MainActivity.getCommune().getRoommates()) {
-                if(stock.getStockType() == StockCreationTypes.SHARE){
-                    if(!stock.getRommmateId().equals(mate.getId())){
-                        budgetList.add(new Pair<String, String>("Erhalte von " +mate.getDisplayName() + " " + fragment +"€\nStock: "+stock.getStockName(), stockRaw));
-                    }
-                }else {
-                    if(stock.getRommmateId().equals(mate.getId())){
-                        budgetList.add(new Pair<String, String>("Erhalte von " +mate.getDisplayName() + " " + fragment +"€", stockRaw));
-                    }
-                }
+            for (Roommate mate : MainActivity.getCommune().getRoommates()) {
+
+
             }
-        }else{
-            //if someone else created the stock
-            budgetList.add(new Pair<String, String>("Zahle an" + stock.getUserName() + " " + fragment +"€", stockRaw));
-        }
-        return budgetList;
+
+            return budgetList;
     }
+
+    private Pair<String,String> createView (Stock stock, Roommate mate, float fragment, String stockRaw) {
+        if (!stock.getRommmateId().equals(MainActivity.getLocalUser().getId())) {
+            return new Pair<String, String>("Erhalte von " + mate.getDisplayName() + " " + fragment + "€\nStock: " + stock.getStockName(), stockRaw);
+        } else {
+            //if someone else created the stock
+            return new Pair<String, String>("Zahle an" + stock.getUserName() + " " + fragment + "€\nStock: " + stock.getStockName(), stockRaw);
+        }
+    }
+
     private void CalculateResources(){
 
     }

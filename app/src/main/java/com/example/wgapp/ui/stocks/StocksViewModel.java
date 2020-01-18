@@ -14,6 +14,7 @@ import com.example.wgapp.models.CoEventTypes;
 import com.example.wgapp.models.Commune;
 import com.example.wgapp.models.Roommate;
 import com.example.wgapp.models.Stock;
+import com.example.wgapp.models.StockCreationTypes;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -57,7 +58,7 @@ public class StocksViewModel extends ViewModel {
                                     if(stock2 != null && stock.getID().equals(stock2.getID())){
                                         if(event2.getDateTime().compareTo(event.getDateTime()) > 0){
                                             tempEvent = event2;
-                                            stock2.setStockType(stock.getStockType());
+                                            stock2.setStockType(StockCreationTypes.SINGLEUSE);
                                             tempStock = stock2;
                                         }
                                     }

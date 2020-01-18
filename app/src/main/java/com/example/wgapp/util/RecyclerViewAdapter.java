@@ -73,22 +73,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     holder.setSwipable(false);
                     return;
                 }
-                if(stock.getStockType() == StockCreationTypes.SINGLEUSE){
-                    return;
-                }
 
-
-
-            for (CoEvent ev : MainActivity.getCommune().getCoEvents()) {
-                if( ev.getType() == CoEventTypes.PAID){
-                    Stock comStock = new Gson().fromJson(ev.getData(), Stock.class);
-                    if(ev.getData().equals(data.get(position).second)){
-                        holder.setSwipable(false);
-                        holder.mTitle.setPaintFlags(holder.mTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                        return;
-                    }
-                }
-            }
             }
 
     }

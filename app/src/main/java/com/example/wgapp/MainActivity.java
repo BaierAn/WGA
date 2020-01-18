@@ -332,7 +332,6 @@ public class MainActivity extends AppCompatActivity {
                     mProgressDialog.dismiss();
                     Commune com = data.getValue(Commune.class);
                     commune = com;
-                    setTitle(commune.getCommuneName());
                 }
                 //DO SOME THING WHEN GET DATA SUCCESS HERE
             }
