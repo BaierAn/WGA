@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.signIn.FirebaseUIActivity"
-            android:label="@string/firebaseui_title_text">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.LAUNCH" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -50,13 +50,6 @@
         </intent-filter>
     </activity>
 
-        <activity android:name=".ui.invitation.AcceptComActivity"
-            android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.LAUNCH" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".ui.invitation.JoinComActivity"
             android:label="@string/app_name">
             <intent-filter>
@@ -73,8 +66,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.settings.PlainTextActivity"
-            android:label="@string/app_name">
+        <activity android:name=".ui.settings.PlainTextActivity">
             <intent-filter>
                 <action android:name="android.intent.action.LAUNCH" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -82,7 +74,7 @@
         </activity>
 
         <activity android:name=".ui.settings.EventLogActivity"
-            android:label="@string/app_name">
+            android:label="@string/title_event_log">
             <intent-filter>
                 <action android:name="android.intent.action.LAUNCH" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -90,6 +82,28 @@
         </activity>
 
         <activity android:name=".util.barcode.BarcodeCaptureActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.LAUNCH" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.resources.creation.CreateLockActivity"
+            android:label="@string/title_lock_creation">
+            <intent-filter>
+                <action android:name="android.intent.action.LAUNCH" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.resources.creation.ResourceCreationActivity"
+            android:label="@string/title_res_creation">
+            <intent-filter>
+                <action android:name="android.intent.action.LAUNCH" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.resources.ResourceActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.LAUNCH" />

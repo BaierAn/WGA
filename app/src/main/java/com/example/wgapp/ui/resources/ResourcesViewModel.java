@@ -11,6 +11,7 @@ import com.example.wgapp.MainActivity;
 import com.example.wgapp.models.CoEvent;
 import com.example.wgapp.models.CoEventTypes;
 import com.example.wgapp.models.Commune;
+import com.example.wgapp.models.MyPair;
 import com.example.wgapp.models.Resource;
 import com.example.wgapp.models.Roommate;
 import com.example.wgapp.models.Stock;
@@ -23,10 +24,10 @@ import java.util.Random;
 
 public class ResourcesViewModel extends ViewModel {
 
-    private MutableLiveData<List<Pair<String,String>>> resourcesList;
-    public LiveData<List<Pair<String,String>>> getResourcesList() {
+    private MutableLiveData<List<MyPair<String,String>>> resourcesList;
+    public LiveData<List<MyPair<String,String>>> getResourcesList() {
         if (resourcesList == null) {
-            resourcesList = new MutableLiveData<List<Pair<String,String>>>();
+            resourcesList = new MutableLiveData<List<MyPair<String,String>>>();
             loadResources();
         }
         return resourcesList;
@@ -40,14 +41,14 @@ public class ResourcesViewModel extends ViewModel {
         myHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                ArrayList<Pair<String,String>> ResStringList = new ArrayList<Pair<String,String>>();
+                ArrayList<MyPair<String,String>> ResStringList = new ArrayList<MyPair<String,String>>();
 
                 for (CoEvent event : MainActivity.getCommune().getCoEvents()) {
 
                     if(event.getType().equals(CoEventTypes.RESOURCE)){
                         Resource res = new Gson().fromJson(event.getData(), Resource.class);
                         if(res != null){
-                            ResStringList.add(new Pair<String, String>("Name: " + res.getResName() + " || Locked: "+res.isLocked(), event.getData()));
+                            ResStringList.add(new MyPair<String, String>("Name: " + res.getResName() + "\nLocked: "+res.isLocked(), event.getData()));
                         }
                     }
                 }

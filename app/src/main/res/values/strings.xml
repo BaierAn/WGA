@@ -1,24 +1,68 @@
 <resources>
+    <!-- Titles -->
     <string name="app_name">WG-App</string>
     <string name="title_budget">Budget</string>
     <string name="title_stocks">Stocks</string>
     <string name="title_resources">Ressourcen</string>
     <string name="title_settings">Settings</string>
-    <string name="sign_in">sign in</string>
-    <string name="signed_out">signed out</string>
-    <string name="sign_out">sign out</string>
+    <string name="title_event_log">Event Log</string>
+    <string name="title_lock_creation">Lock Erstellung</string>
+        <string name="title_res_creation">Ressourcen Erstellung</string>
 
-    <string name="create_com">Create Wg</string>
-    <string name="join_com">Join Wg</string>
-    <string name="join">Join</string>
+    <string name="google_greeting_sign_in">Willkommen  </string>
+    <string name="my_greeting_sign_in">Melde dich gleich mit deinem Google Account an um loszulegen!</string>
 
-    <string name="join_com_banner">Open Shared Link via App, or Paste it in the Textbox</string>
-    <string name="wg_link">WG Link</string>
-    <string name="already_joined">Already Joined</string>
+    <string name="sign_in">Anmelden </string>
+    <string name="signed_out">abgemeldet </string>
+    
+
+    <!-- Invitation -->
+    <string name="create_com">erstellen</string>
+    <string name="join_com">WG beitreten</string>
+    <string name="join">beitreten</string>
+    <string name="sign_out">abmelden</string>
+    <string name="wg_link">WG ID</string>
+    <string name="join_com_banner">WG ID in in die Textbox einfügen</string>
+    <string name="comName">WG Name</string>
 
 
-    <string name="accept">Accept</string>
-    <string name="decline">Decline</string>
+
+    <!-- Stock -->
+    <string name="scan_last_input">Mit Barcode suchen</string>
+    <string name="StockCreationTextName">Stock Name</string>
+    <string name="StockType">Stock Typ</string>
+    <string name="StockCreationTotalCostText">Kosten</string>
+    <string name="StockCreationTotalAmountText">Anzahl</string>
+    <string name="StockCreationBarcodeText">Barcode</string>
+    <string name="PasteBarcode">Barcode einfügen</string>
+    <string name="StockCreationCreate">Stock erstellen</string>
+
+<!-- Budget -->
+
+
+<!-- Settings -->
+
+
+
+<!-- Ressources -->
+    <string name="resInputName">Ressourcenname </string>
+    <string name="LockInputName">Lock Beschreibung </string>
+
+    <string name="LockInputTime">Lock Dauer in Minuten</string>
+
+    <string name="LockInputDate">Lock Datum</string>
+
+
+
+
+
+<!-- misc -->
+
+    <string name="already_joined">Already Joined propaply delete me</string>
+
+
+    <string name="accept">Annehmen</string>
+    <string name="decline">Ablehnen</string>
 
     <string name="create_share">Create and Share</string>
 

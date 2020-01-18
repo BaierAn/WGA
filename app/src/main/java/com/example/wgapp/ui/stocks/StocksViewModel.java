@@ -49,7 +49,7 @@ public class StocksViewModel extends ViewModel {
                         if(stock != null){
                         switch(stock.getStockType()) {
                             case SHARE:
-                                stocksStringList.add(new Pair<String, String>("Name: " +stock.getStockName() +"|| Roommate"+ stock.getUserName()   +"|| Amount: " + stock.getTotalAmount() + "|| Cost: " +stock.getTotalCost(),event.getData()));
+                                stocksStringList.add(new Pair<String, String>("Name: " +stock.getStockName() +"\nErsteller: "+ stock.getUserName()   +"\nAnzahl: " + stock.getTotalAmount() + "\nKosten: " +stock.getTotalCost(),event.getData()));
                                 break;
                             case SINGLEUSE:
                                 CoEvent tempEvent = event;
@@ -57,7 +57,7 @@ public class StocksViewModel extends ViewModel {
 
                                 for (CoEvent event2 : MainActivity.getCommune().getCoEvents()) {
                                     Stock stock2 = new Gson().fromJson(event2.getData(), Stock.class);
-                                    if(stock.getID().equals(stock2.getID())){
+                                    if(stock2 != null && stock.getID().equals(stock2.getID())){
                                         if(event2.getDateTime().compareTo(event.getDateTime()) > 0){
                                             tempEvent = event2;
                                             tempStock = stock2;

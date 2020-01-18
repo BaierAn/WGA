@@ -17,8 +17,8 @@
         <ImageView
             android:id="@+id/signInIcon"
             style="@style/ThemeOverlay.FirebaseIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="124dp"
+            android:layout_height="124dp"
             android:contentDescription="@string/desc_firebase_lockup"/>
 
         <Button
@@ -50,11 +50,5 @@
 
 
     </LinearLayout>
-    <TextView
-        android:id="@+id/status"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/ThemeOverlay.MyTextDetail"
-        android:text="@string/already_joined" />
 
 </LinearLayout>

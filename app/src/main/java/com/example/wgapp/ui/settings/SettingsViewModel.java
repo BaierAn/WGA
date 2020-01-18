@@ -32,11 +32,11 @@ public class SettingsViewModel extends ViewModel {
             public void run() {
                 ArrayList<String> SettingsStringList = new ArrayList<String>();
                 SettingsStringList.add("EventLog");
-                SettingsStringList.add("Share Invitation Link");
-                SettingsStringList.add("User Data");
-                SettingsStringList.add("Leave WG");
-                SettingsStringList.add("Logout");
-                SettingsStringList.add("Delete Userdata");
+                SettingsStringList.add("Mit Link einladen");
+                SettingsStringList.add("Nutzerdaten");
+                SettingsStringList.add("WG verlassen");
+                SettingsStringList.add("Abmelden");
+                SettingsStringList.add("Nutzerdaten löschen");
                 settingsList.setValue(SettingsStringList);
             }
         }, 1);

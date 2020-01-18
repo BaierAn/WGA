@@ -12,6 +12,7 @@ import com.example.wgapp.models.Roommate;
 import com.example.wgapp.models.Stock;
 import com.example.wgapp.models.StockCreationTypes;
 import com.example.wgapp.ui.invitation.JoinComActivity;
+import com.example.wgapp.ui.resources.creation.ResourceCreationActivity;
 import com.example.wgapp.ui.signIn.FirebaseUIActivity;
 import com.example.wgapp.ui.start.StartScreenActivity;
 import com.example.wgapp.ui.stocks.StockCreationActivity;
@@ -329,6 +330,7 @@ public class MainActivity extends AppCompatActivity {
                     mProgressDialog.dismiss();
                     Commune com = data.getValue(Commune.class);
                     commune = com;
+                    setTitle(commune.getCommuneName());
                 }
                 //DO SOME THING WHEN GET DATA SUCCESS HERE
             }
@@ -430,5 +432,10 @@ public class MainActivity extends AppCompatActivity {
     }
     public static Roommate getLocalUser() {
         return localUser;
+    }
+
+    public void linkToCreateResource(View view) {
+        Intent usrDatIntent = new Intent(this, ResourceCreationActivity.class);
+        startActivity(usrDatIntent);
     }
 }

@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.wgapp.MainActivity;
 import com.example.wgapp.R;
 import com.example.wgapp.ui.budget.BudgetViewModel;
 import com.example.wgapp.util.RecyclerViewAdapter;
@@ -68,6 +69,7 @@ public class StocksFragment extends Fragment {
 
         enableSwipeToDeleteAndUndo();
 
+        getActivity().setTitle(MainActivity.getCommune().getCommuneName());
 
 
 

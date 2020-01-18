@@ -49,14 +49,13 @@ public class SettingsFragment extends Fragment {
                 String item = ((TextView)view).getText().toString();
 
                 switch(item){
-
                     case "EventLog":
                         Intent EventLogIntent = new Intent(getContext(), EventLogActivity.class);
 
                         startActivity(EventLogIntent);
 
                         break;
-                    case "Share Invitation Link":
+                    case "Mit Link einladen":
                         Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
                         whatsappIntent.setType("text/plain");
                         whatsappIntent.putExtra(Intent.EXTRA_TEXT, MainActivity.getCommune().getCommuneLink());
@@ -66,7 +65,7 @@ public class SettingsFragment extends Fragment {
 
                         }
                         break;
-                    case "User Data":
+                    case "Nutzerdaten":
                         Gson gson = new Gson();
                         String usrData = gson.toJson(MainActivity.getLocalUser());
 
@@ -74,7 +73,7 @@ public class SettingsFragment extends Fragment {
                         usrDatIntent.putExtra("data", usrData);
                         startActivity(usrDatIntent);
                         break;
-                    case "Leave WG":
+                    case "WG verlassen":
 
 
                         Roommate usr = MainActivity.getLocalUser();
@@ -92,16 +91,16 @@ public class SettingsFragment extends Fragment {
 
                         MainActivity.setCommune(new Commune());
 
-                        Intent intent = new Intent(getContext(), StartScreenActivity.class);
+                        Intent intent = new Intent(getContext(), MainActivity.class);
                         startActivity(intent);
                         break;
-                    case "Logout":
+                    case "Abmelden":
                         FirebaseUIActivity.signOut(getContext());
-                        Intent signOutintent = new Intent(getContext(), MainActivity.class);
+                        Intent signOutintent = new Intent(getContext(), FirebaseUIActivity.class);
                         startActivity(signOutintent);
                         break;
 
-                    case "Delete Userdata":
+                    case "Nutzerdaten löschen":
                         Commune com2 = MainActivity.getCommune();
                         List<Roommate> li2 = com2.getRoommates();
                         li2.remove(MainActivity.getLocalUser());
@@ -110,7 +109,9 @@ public class SettingsFragment extends Fragment {
                         MainActivity.getCommuneWriteRef().setValue(com2);
                         MainActivity.setCommune(new Commune());
                         MainActivity.getUserWriteRef().removeValue();
-                        Intent remOutintent = new Intent(getContext(), MainActivity.class);
+                        MainActivity.setLocalUser(null);
+                        Intent remOutintent = new Intent(getContext(), FirebaseUIActivity.class);
+                        FirebaseUIActivity.signOut(getContext());
                         startActivity(remOutintent);
                         break;
                     default:
@@ -131,6 +132,8 @@ public class SettingsFragment extends Fragment {
                 settingsListView.setAdapter(adapter);
             }
         });
+        getActivity().setTitle(MainActivity.getCommune().getCommuneName());
+
 
         return root;
     }

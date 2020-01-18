@@ -8,26 +8,36 @@ android:layout_width="match_parent"
 android:layout_height="match_parent">
 
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/createStocksButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|center"
-        android:clickable="true"
-        android:onClick="createNewStock"
-        app:srcCompat="@android:drawable/ic_menu_add" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/stocks_list_view"
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        android:layout_height="match_parent"
+        app:layout_anchorGravity="center">
 
-</RelativeLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/createStocksButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="60dp"
+            android:clickable="true"
+            android:onClick="createNewStock"
+            app:backgroundTint="#9FFF0000"
+            app:srcCompat="@android:drawable/ic_menu_add" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/stocks_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+
+
+    </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

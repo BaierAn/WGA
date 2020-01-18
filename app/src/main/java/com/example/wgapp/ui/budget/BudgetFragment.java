@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.wgapp.MainActivity;
 import com.example.wgapp.R;
 import com.example.wgapp.util.RecyclerViewAdapter;
 import com.example.wgapp.util.SwipeToDeleteCallback;
@@ -75,7 +76,8 @@ public class BudgetFragment extends Fragment {
                 budgetListView.setAdapter(adapter);
             }
         });
-*/
+*/        getActivity().setTitle(MainActivity.getCommune().getCommuneName());
+
         return root;
     }
 

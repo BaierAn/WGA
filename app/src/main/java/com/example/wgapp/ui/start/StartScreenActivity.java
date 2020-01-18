@@ -37,6 +37,7 @@ public class StartScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start_screen);
         new DownloadImageTask((ImageView) findViewById(R.id.signInIcon))
                 .execute(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl().toString());
+        setTitle(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
     }
 
     public void linkToCreateComAc(View view){
@@ -52,7 +53,8 @@ public class StartScreenActivity extends AppCompatActivity {
     public void LogOut(View view){
 
         FirebaseUIActivity.signOut(this);
-        Intent intent = new Intent(this, MainActivity.class);
+        MainActivity.setLocalUser(null);
+        Intent intent = new Intent(this, FirebaseUIActivity.class);
         startActivity(intent);
     }
 }

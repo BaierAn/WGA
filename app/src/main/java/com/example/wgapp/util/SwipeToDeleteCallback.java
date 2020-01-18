@@ -36,7 +36,7 @@ abstract public class SwipeToDeleteCallback extends ItemTouchHelper.Callback {
         mClearPaint = new Paint();
         mClearPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
         //todo bin drawble
-        deleteDrawable = ContextCompat.getDrawable(mContext, R.drawable.fui_idp_button_background_anonymous);
+        deleteDrawable = ContextCompat.getDrawable(mContext, R.drawable.ic_google__g__logo);
         intrinsicWidth = deleteDrawable.getIntrinsicWidth();
         intrinsicHeight = deleteDrawable.getIntrinsicHeight();
 
@@ -85,7 +85,7 @@ abstract public class SwipeToDeleteCallback extends ItemTouchHelper.Callback {
 
         //todo red muss weggehen
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-        clearCanvas(c, itemView.getRight() + dX, (float) itemView.getTop(), (float) itemView.getRight(), (float) itemView.getBottom());
+        //clearCanvas(c, itemView.getRight() + dX, (float) itemView.getTop(), (float) itemView.getRight(), (float) itemView.getBottom());
 
     }
 

@@ -80,7 +80,7 @@ public class BudgetViewModel extends ViewModel {
                     break;
 
                 default:
-                    throw new IllegalStateException("Unexpected value: " + event.getType());
+                    break;
             }
         }
         return budgetList;
@@ -107,17 +107,17 @@ public class BudgetViewModel extends ViewModel {
             for (Roommate mate  : MainActivity.getCommune().getRoommates()) {
                 if(stock.getStockType() == StockCreationTypes.SHARE){
                     if(!stock.getRommmateId().equals(mate.getId())){
-                        budgetList.add(new Pair<String, String>("get from " +mate.getDisplayName() + " : +" + fragment +"€", stockRaw));
+                        budgetList.add(new Pair<String, String>("Erhalte von " +mate.getDisplayName() + " " + fragment +"€", stockRaw));
                     }
                 }else {
                     if(stock.getRommmateId().equals(mate.getId())){
-                        budgetList.add(new Pair<String, String>("get from " +mate.getDisplayName() + " : +" + fragment +"€", stockRaw));
+                        budgetList.add(new Pair<String, String>("Erhalte von " +mate.getDisplayName() + " " + fragment +"€", stockRaw));
                     }
                 }
             }
         }else{
             //if someone else created the stock
-            budgetList.add(new Pair<String, String>("owe to " + stock.getUserName() + " : -" + fragment +"€", stockRaw));
+            budgetList.add(new Pair<String, String>("Zahle an" + stock.getUserName() + " " + fragment +"€", stockRaw));
         }
         return budgetList;
     }

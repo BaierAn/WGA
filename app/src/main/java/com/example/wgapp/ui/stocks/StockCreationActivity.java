@@ -47,7 +47,8 @@ public class StockCreationActivity extends AppCompatActivity {
 
 
         DropdownType = findViewById(R.id.StockCreationDropdownType);
-        ArrayAdapter<StockCreationTypes> adapter = new ArrayAdapter<StockCreationTypes>(this, android.R.layout.simple_spinner_dropdown_item, StockCreationTypes.values());
+        StockCreationTypes[] val =  {StockCreationTypes.values()[0] ,StockCreationTypes.values()[1] };
+        ArrayAdapter<StockCreationTypes> adapter = new ArrayAdapter<StockCreationTypes>(this, android.R.layout.simple_spinner_dropdown_item, val);
         DropdownType.setAdapter(adapter);
 
         InputName = (EditText) findViewById(R.id.StockCreationInputName);

@@ -1,4 +1,4 @@
-package com.example.wgapp.ui.resources;
+package com.example.wgapp.ui.resources.creation;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +17,7 @@ import com.example.wgapp.models.CoEventTypes;
 import com.example.wgapp.models.Resource;
 import com.example.wgapp.models.Stock;
 import com.example.wgapp.models.StockCreationTypes;
+import com.example.wgapp.ui.resources.ResourcesFragment;
 import com.example.wgapp.util.barcode.BarcodeCaptureActivity;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.CameraSource;
@@ -36,7 +37,7 @@ public class ResourceCreationActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_res_creation);
 
-        InputName = (EditText) findViewById(R.id.ResCreationInputName);
+        InputName = (EditText) findViewById(R.id.createResInput);
 
     }
 
@@ -48,7 +49,7 @@ public class ResourceCreationActivity extends AppCompatActivity {
         MainActivity.getCommune().addCoEvent(stockCoEvent);
         MainActivity.getCommuneWriteRef().setValue(MainActivity.getCommune());
 
-        Intent intent = new Intent(this, ResourcesFragment.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
 
 

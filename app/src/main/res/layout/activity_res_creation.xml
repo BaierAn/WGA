@@ -18,34 +18,25 @@
             android:id="@+id/status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="left"
             style="@style/ThemeOverlay.MyTextDetail"
-            android:text="@string/join_com_banner" />
-
-
-        <ListView
-            android:id="@+id/roommate_list_view"
-            android:layout_width="wrap_content"
-            android:layout_height="334dp" />
-
-        <Button
-            android:id="@+id/acceptButton"
-            android:layout_width="wrap_content"
-            android:layout_height="69dp"
+            android:text="@string/resInputName" />
+        <EditText
+            android:id="@+id/createResInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
             android:layout_centerInParent="true"
-            android:text="@string/join"
-            android:theme="@style/ThemeOverlay.MyDarkButton" />
+            android:visibility="visible" />
 
         <Button
-            android:id="@+id/declineButton"
+            android:id="@+id/createResButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/join"
+            android:text="@string/create_com"
+            android:onClick="createRes"
             android:theme="@style/ThemeOverlay.MyDarkButton" />
 
     </LinearLayout>
-
-
-
-
 </LinearLayout>

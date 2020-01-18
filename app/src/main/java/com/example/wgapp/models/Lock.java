@@ -8,7 +8,7 @@ public class Lock {
     private String description;
     private Date startDate;
     private int completionTime;
-
+    private String ResID;
 
     public Lock(){}
 
@@ -25,6 +25,13 @@ public class Lock {
 
 }
 
+    public String getResID() {
+        return ResID;
+    }
+
+    public void setResID(String resID) {
+        ResID = resID;
+    }
 
     public void setDescription(String description) {
         this.description = description;
@@ -50,10 +57,11 @@ public class Lock {
         return completionTime;
     }
 
-    public Lock(String description, Date startDate, int completionTime) {
+    public Lock(String description, Date startDate, int completionTime, String id) {
         this.description = description;
         this.startDate = startDate;
         this.completionTime = completionTime;
+        this.ResID = id;
     }
 }
 

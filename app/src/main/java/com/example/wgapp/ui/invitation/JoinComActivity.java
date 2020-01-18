@@ -1,5 +1,6 @@
 package com.example.wgapp.ui.invitation;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -20,7 +21,7 @@ public class JoinComActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 123;
 
     EditText InputName ;
-
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class JoinComActivity extends AppCompatActivity {
         String userName;
 
         if (extras != null) {
-            InputName.setText(extras.getString("link"));
+            InputName.setText(extras.getString("link").substring(1));
         }
 
     }
@@ -46,12 +47,24 @@ public class JoinComActivity extends AppCompatActivity {
         MainActivity.initCommuneDataBase();
         Commune com = MainActivity.getCommune();
 
-        com.addRommate(rm);
-        MainActivity.getUserWriteRef().setValue(rm);
-        MainActivity.getCommuneWriteRef().setValue(com);
+        if(com != null && com.getCommuneId() != null){
+            com.addRommate(rm);
+            MainActivity.getUserWriteRef().setValue(rm);
+            MainActivity.getCommuneWriteRef().setValue(com);
 
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }else{
+            if (mProgressDialog == null) {
+                mProgressDialog = new ProgressDialog( this);
+                mProgressDialog.setMessage("WG konnte nicht gefunden werden");
+                mProgressDialog.setIndeterminate(true);
+            }
+
+            mProgressDialog.show();
+
+        }
+
     }
 
 }

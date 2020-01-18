@@ -47,7 +47,7 @@ public class CreateComActivity extends AppCompatActivity {
         commune.setCommuneName(test);
         MainActivity.initCommuneDataBase();
         MainActivity.getCommuneWriteRef().setValue(commune);
-
+        MainActivity.setCommune(commune);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

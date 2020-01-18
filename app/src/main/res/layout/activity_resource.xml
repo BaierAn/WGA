@@ -8,25 +8,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ListView
+            android:id="@+id/lock_list_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/createResButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_marginBottom="60dp"
+            android:layout_gravity="end|bottom"
             android:clickable="true"
-            android:onClick="linkToCreateResource"
+            android:onClick="createLock"
             app:backgroundTint="#9FFF0000"
             app:srcCompat="@android:drawable/ic_menu_add" />
-        <ListView
-            android:id="@+id/resources_list_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-
-
-        </ListView>
-
     </FrameLayout>
 
 </LinearLayout>
