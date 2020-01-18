@@ -44,6 +44,7 @@ public class CreateComActivity extends AppCompatActivity {
     public void createCommune(View view){
         Commune commune = new Commune();
 
+        MainActivity.initUserDataBase();
 
         //todo roommate nullpointer
         usr = MainActivity.getLocalUser();
@@ -61,9 +62,13 @@ public class CreateComActivity extends AppCompatActivity {
 
         String test = InputName.getText().toString();
         commune.setCommuneName(test);
+
+
         MainActivity.initCommuneDataBase();
-        MainActivity.getCommuneWriteRef().setValue(commune);
+
         MainActivity.setCommune(commune);
+        MainActivity.getCommuneWriteRef().setValue(commune);
+
         finish();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

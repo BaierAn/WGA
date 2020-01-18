@@ -29,6 +29,7 @@ public class JoinComActivity extends AppCompatActivity {
     EditText InputName ;
     private ProgressDialog mProgressDialog;
     Commune cm;
+    Roommate rm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,37 +49,21 @@ public class JoinComActivity extends AppCompatActivity {
 
     public void joinWG(View view){
 
-        Roommate rm = MainActivity.getLocalUser();
+        rm = MainActivity.getLocalUser();
 
 
         rm.setCommuneID(InputName.getText().toString());
 
 
-
+        MainActivity.setCommuneReadRef(null);
+        MainActivity.setCommuneWriteRef(null);
         MainActivity.initCommuneDataBase();
 
         mCheckInforComServer(MainActivity.getCommuneReadRef());
 
 
 
-        if(cm != null && cm.getCommuneId() != null){
-            cm.addRommate(rm);
-            MainActivity.getUserWriteRef().setValue(rm);
-            MainActivity.getCommuneWriteRef().setValue(cm);
 
-            finish();
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-        }else{
-            if (mProgressDialog == null) {
-                mProgressDialog = new ProgressDialog( this);
-                mProgressDialog.setMessage("WG konnte nicht gefunden werden");
-                mProgressDialog.setIndeterminate(true);
-            }
-
-            mProgressDialog.show();
-
-        }
 
     }
     public boolean onOptionsItemSelected(MenuItem item){
@@ -108,7 +93,24 @@ public class JoinComActivity extends AppCompatActivity {
                     mProgressDialog.dismiss();
                     Commune com = data.getValue(Commune.class);
                     cm = com;
-                    setTitle(cm.getCommuneName());
+                    if(cm != null && cm.getCommuneId() != null){
+                        cm.addRommate(rm);
+                        MainActivity.getUserWriteRef().setValue(rm);
+                        MainActivity.getCommuneWriteRef().setValue(cm);
+
+                        finish();
+                        Intent intent = new Intent(self, MainActivity.class);
+                        startActivity(intent);
+                    }else{
+                        if (mProgressDialog == null) {
+                            mProgressDialog = new ProgressDialog( self);
+                            mProgressDialog.setMessage("WG konnte nicht gefunden werden");
+                            mProgressDialog.setIndeterminate(true);
+                        }
+
+                        mProgressDialog.show();
+
+                    }
                 }
                 //DO SOME THING WHEN GET DATA SUCCESS HERE
             }

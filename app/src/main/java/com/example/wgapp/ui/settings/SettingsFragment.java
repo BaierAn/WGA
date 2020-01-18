@@ -90,6 +90,10 @@ public class SettingsFragment extends Fragment {
                         MainActivity.getCommuneWriteRef().setValue(com);
 
                         MainActivity.setCommune(new Commune());
+
+                        MainActivity.setCommuneReadRef(null);
+                        MainActivity.setCommuneWriteRef(null);
+
                         getActivity().finish();
                         Intent intent = new Intent(getContext(), MainActivity.class);
                         startActivity(intent);
@@ -114,6 +118,10 @@ public class SettingsFragment extends Fragment {
 
                         getActivity().finish();
 
+                        MainActivity.setCommuneReadRef(null);
+                        MainActivity.setCommuneWriteRef(null);
+                        MainActivity.setUserReadRef(null);
+                        MainActivity.setUserWriteRef(null);
                         Intent remOutintent = new Intent(getContext(), FirebaseUIActivity.class);
                         FirebaseUIActivity.signOut(getContext());
                         startActivity(remOutintent);

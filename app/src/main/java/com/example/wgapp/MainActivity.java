@@ -179,6 +179,9 @@ public class MainActivity extends AppCompatActivity {
 
     public static void initCommuneDataBase(){
 
+
+        //todo if reference is already set
+
         if (CommuneReadRef == null || CommuneWriteRef == null){
             CommuneReadRef = FirebaseDatabase.getInstance().getReference().child("Commune/"+localUser.getCommuneID());
             CommuneWriteRef = FirebaseDatabase.getInstance().getReference().child("Commune/"+localUser.getCommuneID());
@@ -432,6 +435,8 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.localUser = localUser;
     }
     public static Roommate getLocalUser() {
+
+
         return localUser;
     }
 
