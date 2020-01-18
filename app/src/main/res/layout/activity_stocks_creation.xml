@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="getLastInput"
+        android:theme="@style/ThemeOverlay.MyDarkButton"
         android:text="@string/scan_last_input" />
 
     <TextView
@@ -85,6 +86,7 @@
         android:layout_height="wrap_content"
         android:onClick="scanBarcode"
         android:gravity="center"
+        android:theme="@style/ThemeOverlay.MyDarkButton"
         android:text="@string/PasteBarcode" />
 
     <Button
@@ -93,6 +95,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:onClick="createStock"
+        android:theme="@style/ThemeOverlay.MyDarkButton"
         android:text="@string/StockCreationCreate" />
 
 </LinearLayout>
