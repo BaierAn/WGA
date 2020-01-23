@@ -100,8 +100,9 @@ public class SettingsFragment extends Fragment {
                         break;
                     case "Abmelden":
                         FirebaseUIActivity.signOut(getContext());
+                        MainActivity.setLocalUser(null);
                         getActivity().finish();
-                        Intent signOutintent = new Intent(getContext(), MainActivity.class);
+                        Intent signOutintent = new Intent(getContext(), FirebaseUIActivity.class);
                         startActivity(signOutintent);
                         break;
 

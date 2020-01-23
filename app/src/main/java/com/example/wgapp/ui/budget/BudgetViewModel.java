@@ -62,8 +62,12 @@ public class BudgetViewModel extends ViewModel {
                     for (Pair<String, String> rawStock : budgetList) {
                         if(event.getData().equals(rawStock.second)){
                             //todo alter ui
-                            budgetList.add(new Pair<String, String>(rawStock.first + " ✓" , rawStock.second));
-                            budgetList.remove(rawStock);
+                            String s = rawStock.first;
+                            if(!s.contains("✓")){
+                                budgetList.add(new Pair<String, String>(rawStock.first + " ✓" , rawStock.second));
+                                budgetList.remove(rawStock);
+                            }
+
                             break;
                         }
                         }
@@ -96,8 +100,16 @@ public class BudgetViewModel extends ViewModel {
                 break;
             case TOOKSINGLE:
                 fragment = stock.getTotalCost() / stock.getTotalAmount();
+                Roommate mate2 = new Roommate();
+                for (Roommate mate : MainActivity.getCommune().getRoommates()) {
+                    if (mate.getId().equals(stock.getRommmateId())) {
+                        mate2 = mate;
+                    }
+                }
                 if(!MainActivity.getLocalUser().getId().equals(stock.getRommmateId())){
-                    budgetList.add(new Pair<String, String>("Zahle an" + stock.getUserName() + " " + fragment +"€\nStock: "+stock.getStockName(), stockRaw));
+
+                    budgetList.add(createView(stock, mate2, fragment, stockRaw));
+
                 }
 
                 break;
@@ -116,11 +128,11 @@ public class BudgetViewModel extends ViewModel {
     }
 
     private Pair<String,String> createView (Stock stock, Roommate mate, float fragment, String stockRaw) {
-        if (!stock.getRommmateId().equals(MainActivity.getLocalUser().getId())) {
+        if (stock.getRommmateId().equals(MainActivity.getLocalUser().getId())) {
             return new Pair<String, String>("Erhalte von " + mate.getDisplayName() + " " + fragment + "€\nStock: " + stock.getStockName(), stockRaw);
         } else {
             //if someone else created the stock
-            return new Pair<String, String>("Zahle an" + stock.getUserName() + " " + fragment + "€\nStock: " + stock.getStockName(), stockRaw);
+            return new Pair<String, String>("Zahle an " + stock.getUserName() + " " + fragment + "€\nStock: " + stock.getStockName(), stockRaw);
         }
     }
 

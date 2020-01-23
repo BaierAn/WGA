@@ -68,13 +68,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.mTitle.setText(data.get(position).first);
 
         Stock stock = new Gson().fromJson(data.get(position).second, Stock.class);
-        if(stock != null){
+        if(data.get(position).first.contains("Zahle an") || data.get(position).first.contains("Erhalte von")){}else{
+            if(stock != null){
                 if(stock.getStockType() == StockCreationTypes.SHARE){
                     holder.setSwipable(false);
                     return;
                 }
 
             }
+        }
+
 
     }
 
@@ -98,6 +101,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     StockCreationTypes.TOOKSINGLE,
                     stock.getStockName());
             newStock.setID(stock.getID());
+
+            newStock.setRommmateId(stock.getRommmateId());
+            newStock.setStockName(stock.getStockName());
+            newStock.setUserName(stock.getUserName());
 
             CoEvent stockCoEvent = new CoEvent(CoEventTypes.STOCK, new Gson().toJson(newStock));
 

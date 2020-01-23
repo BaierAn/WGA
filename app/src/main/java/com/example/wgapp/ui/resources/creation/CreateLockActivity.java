@@ -81,6 +81,7 @@ public class CreateLockActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, ResourceActivity.class);
         intent.putExtra("data",resIntent.getStringExtra("data") );
+        finish();
         startActivity(intent);
 
 
